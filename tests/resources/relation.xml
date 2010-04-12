@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<relation xmlns="http://onesocialweb.org/spec/1.0/">
+  <id>urn:uuid:0bfb71a4-d8fd-4410-b119-199c3596f296</id>
+  <published>2010-01-13T12:40:51.292Z</published>
+  <from>romeo@montague.lit</from>
+  <to>juliet@capulet.lit</to>
+  <nature>http://onesocialweb.org/spec/1.0/relations/nature/engaged</nature>
+  <status>http://onesocialweb.org/spec/1.0/relations/status/requested</status>
+  <message><![CDATA[Dear Juliet, let's say to the world that we are engaged !]]></message>
+</relation>

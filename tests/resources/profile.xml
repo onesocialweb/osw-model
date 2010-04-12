@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.portablecontacts.net/draft-spec.html">
+  <id>703887</id>
+  <displayName><value>Mork Hashimoto</value></displayName>
+  <name>
+   <familyName>Hashimoto</familyName>
+   <givenName>Mork</givenName>
+  </name>
+  <birthday><value>0000-01-16</value></birthday>
+  <gender><value>male</value></gender>
+  <drinker><value>heavily</value></drinker>
+  <tags><value>plaxo guy</value></tags>
+  <tags><value>favorite</value></tags>
+  <emails>
+   <value>mhashimoto-04@plaxo.com</value>
+   <type>work</type>
+   <primary>true</primary>
+  </emails>
+  <emails>
+   <value>mhashimoto-04@plaxo.com</value>
+   <type>home</type>
+  </emails>
+  <emails>
+   <value>mhashimoto@plaxo.com</value>
+   <type>home</type>
+  </emails>
+  <urls>
+   <value>http://www.seeyellow.com</value>
+   <type>work</type>
+  </urls>
+  <urls>
+   <value>http://www.angryalien.com</value>
+   <type>home</type>
+  </urls>
+  <phoneNumbers>
+   <value>KLONDIKE5</value>
+   <type>work</type>
+  </phoneNumbers>
+  <phoneNumbers>
+   <value>650-123-4567</value>
+   <type>mobile</type>
+  </phoneNumbers>
+  <photos>
+   <value>http://sample.site.org/photos/12345.jpg</value>
+   <type>thumbnail</type>
+  </photos>
+  <ims>
+   <value>plaxodev8</value>
+   <type>aim</type>
+  </ims>
+  <addresses>
+   <type>home</type>
+   <streetAddress><![CDATA[742 Evergreen Terrace
+Suite 123]]></streetAddress>
+   <locality>Springfield</locality>
+   <region>VT</region>
+   <postalCode>12345</postalCode>
+   <country>USA</country>
+   <formatted><![CDATA[742 Evergreen Terrace
+Suite 123
+Springfield, VT 12345 USA]]></formatted>
+  </addresses>
+  <organizations>
+   <name>Burns Worldwide</name>
+   <title>Head Bee Guy</title>
+  </organizations>
+  <accounts>
+   <domain>plaxo.com</domain>
+   <userid>2706</userid>
+  </accounts>
+</entry>

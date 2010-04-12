@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.1//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.1/distro-source/core/src/gwt-module.dtd">
+<module>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <!-- Other module inherits                                      -->
+  <inherits name='org.w3c.Dom'/>
+  <inherits name='org.onesocialweb.Xml'/>
+    
+  <!--  Additional settings -->
+  <source path="model/"  >
+  	<exclude name="**/*Test.java" />
+  	<exclude name="vcard4/DefaultBirthdayField.java"/>
+  	<exclude name="vcard4/DefaultVCard4Factory.java"/>
+  	<exclude name="atom/DefaultAtomHelper.java"/> 	  	  	
+  </source>
+    	
+</module>

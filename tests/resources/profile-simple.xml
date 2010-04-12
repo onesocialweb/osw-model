@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entry xmlns="http://www.portablecontacts.net/draft-spec.html" xmlns:osw="http://onesocialweb.org/spec/1.0/">
+	<id>test@xmpp.loc</id>
+		<avatar>
+		<value>http://eschnou.com/avatar.jpg</value>
+		<osw:acl-rule>
+			<osw:acl-action permission="http://onesocialweb.org/spec/1.0/acl/permission/grant">http://onesocialweb.org/spec/1.0/acl/action/view</osw:acl-action>
+			<osw:acl-subject type="http://onesocialweb.org/spec/1.0/acl/subject/everyone"></osw:acl-subject>
+		</osw:acl-rule>
+	</avatar>
+</entry>

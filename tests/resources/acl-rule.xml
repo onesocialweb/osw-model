@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<acl-rule xmlns="http://onesocialweb.org/spec/1.0/">
+	<acl-action permission="http://onesocialweb.org/spec/1.0/acl/permission/grant" >http://onesocialweb.org/spec/1.0/acl/action/view</acl-action>
+	<acl-subject type="http://onesocialweb.org/spec/1.0/acl/subject/everyone" />		
+</acl-rule>

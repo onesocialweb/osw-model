@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<notification xmlns="http://onesocialweb.org/spec/1.0/"> 
+<type>http://onesocialweb.org/spec/1.0/notification/activity</type> 
+<payload> 
+<entry xmlns="http://www.w3.org/2005/Atom"> 
+<id>urn:uuid:957e3bb9-3626-479e-a1f5-4c490ee93c6c</id> 
+<published>2009-12-16T12:15:08.930Z</published> 
+<title>cool ?</title> 
+<acl-rule xmlns="http://onesocialweb.org/spec/1.0/"> 
+<acl-action permission="http://onesocialweb.org/spec/1.0/acl/permission/grant">http://onesocialweb.org/spec/1.0/acl/action/view</acl-action> 
+<acl-subject type="http://onesocialweb.org/spec/1.0/acl/subject/everyone"/> 
+</acl-rule> 
+<actor xmlns="http://activitystrea.ms/spec/1.0/"> 
+<email xmlns="http://www.w3.org/2005/Atom">laurent.eschenauer@vodafone.com</email> 
+<name xmlns="http://www.w3.org/2005/Atom">Laurent Eschenauer</name> 
+<uri xmlns="http://www.w3.org/2005/Atom">eschnou@onesocial.me</uri> 
+</actor> 
+<object xmlns="http://activitystrea.ms/spec/1.0/"> 
+<id xmlns="http://www.w3.org/2005/Atom">urn:uuid:30d396f3-84a1-4012-b2e5-08a3a4c90d8b</id> 
+<content xmlns="http://www.w3.org/2005/Atom">cool ?</content> 
+<object-type>http://onesocialweb.org/spec/1.0/object/status</object-type> 
+</object> 
+<verb xmlns="http://activitystrea.ms/spec/1.0/">http://activitystrea.ms/schema/1.0/post</verb> 
+</entry> 
+</payload> 
+</notification> 
