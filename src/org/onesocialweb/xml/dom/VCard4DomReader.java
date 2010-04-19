@@ -120,7 +120,7 @@ public abstract class VCard4DomReader
 	protected GenderField readGender(Element element) {
 		GenderField field=factory.gender();
 		
-		String sexValue=element.getTextContent();
+		String sexValue=element.getTextContent().trim();
 		int sexInt=Integer.parseInt(sexValue);
 	
 		switch (sexInt)
