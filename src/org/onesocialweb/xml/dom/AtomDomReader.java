@@ -133,7 +133,7 @@ public abstract class AtomDomReader {
 		AtomContent content = factory.content();
 		content.setType(DomHelper.getElementText(element, "type", Atom.NAMESPACE));
 		content.setType(DomHelper.getElementText(element, "src", Atom.NAMESPACE));
-		content.setValue(element.getTextContent());
+		content.setValue(element.getTextContent().trim());
 		return content;
 	}
 	

@@ -25,7 +25,7 @@ public class DomHelper {
 	public static String getElementText(Element element, String tagName, String namespace) {
 		Element e = getElement(element, tagName, namespace);
 		if (e != null) {
-			String text = ((Element) e).getTextContent();
+			String text = ((Element) e).getTextContent().trim();
 			if (text != null) {
 				text = text.trim();
 				if (text.length() > 0) {

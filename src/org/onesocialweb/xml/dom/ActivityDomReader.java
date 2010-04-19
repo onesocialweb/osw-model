@@ -104,7 +104,7 @@ public abstract class ActivityDomReader {
 
 	protected ActivityVerb readVerb(Element element) {
 		ActivityVerb verb = factory.verb();
-		verb.setValue(element.getTextContent());
+		verb.setValue(element.getTextContent().trim());
 		return verb;
 	}
 

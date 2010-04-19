@@ -62,7 +62,7 @@ public abstract class AclDomReader {
 	
 	protected AclAction readAction(Element element) {
 		AclAction action = factory.aclAction();
-		action.setName(element.getTextContent());
+		action.setName(element.getTextContent().trim());
 		action.setPermission(element.getAttribute(Onesocialweb.PERMISSION_ATTRIBUTE));
 		return action;
 	}
@@ -70,7 +70,7 @@ public abstract class AclDomReader {
 	protected AclSubject readSubject(Element element) {
 		AclSubject subject = factory.aclSubject();
 		subject.setType(element.getAttribute(Onesocialweb.TYPE_ATTRIBUTE));
-		subject.setName(element.getTextContent());
+		subject.setName(element.getTextContent().trim());
 		return subject;
 	}
 
