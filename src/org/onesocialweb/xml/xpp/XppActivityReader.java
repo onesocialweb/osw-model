@@ -80,6 +80,8 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 					}
 				} else if (namespace.equals(Atom.NAMESPACE)) {
 					readAtomEntryElement(entry, parser);
+				} else if (namespace.equals(AtomThreading.NAMESPACE)) {
+					readAtomThreadingElement(entry, parser);
 				} else if (namespace.equals(Onesocialweb.NAMESPACE)) {
 					if (name.equals(Onesocialweb.ACL_RULE_ELEMENT)) {
 						entry.addAclRule(aclReader.parse(parser));
@@ -226,8 +228,6 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 			entry.addContent(parseContent(parser));
 		} else if (name.equals(Atom.LINK_ELEMENT)) {
 			entry.addLink(parseLink(parser));
-		} else if (name.equals(AtomThreading.IN_REPLY_TO_ELEMENT)) {
-			entry.addRecipient(parseRecipient(parser));
 		} else if (name.equals(Atom.CATEGORY_ELEMENT)) {
 			entry.addCategory(parseCategory(parser));
 		} else if (name.equals(Atom.ID_ELEMENT)) {
@@ -238,6 +238,14 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 			entry.setUpdated(parseDate(parser.nextText().trim()));
 		} else if (name.equals(Atom.TITLE_ELEMENT)) {
 			entry.setTitle(parser.nextText().trim());
+		}
+	}
+	
+	protected void readAtomThreadingElement(AtomEntry entry, XmlPullParser parser) throws XmlPullParserException, IOException {
+		String name = parser.getName();
+		
+		if (name.equals(AtomThreading.IN_REPLY_TO_ELEMENT)) {
+			entry.addRecipient(parseRecipient(parser));
 		}
 	}
 	

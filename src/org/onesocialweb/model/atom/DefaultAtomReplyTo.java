@@ -90,7 +90,7 @@ public class DefaultAtomReplyTo extends DefaultAtomCommon implements AtomReplyTo
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
-		buffer.append("[AtomLink ");
+		buffer.append("[AtomRecipient ");
 		if (href != null) {
 			buffer.append("href:" + href + " ");
 		}
