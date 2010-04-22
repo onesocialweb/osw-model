@@ -64,11 +64,11 @@ public class VCard4DomReaderTest {
         return vcard4DomReader.readProfile((Element) vcardNodes.item(0));
 	}
 	
-	protected org.w3c.dom.Document readDocument(String path) throws DocumentException {
+	protected org.w3c.dom.Document readDocument(String path) throws DocumentException{
         SAXReader reader = new SAXReader();
-        Document document = reader.read(getClass().getClassLoader().getResourceAsStream(path));
-        DOMWriter writer = new DOMWriter();
-        return writer.write(document);		
+        Document document = reader.read(getClass().getClassLoader().getResourceAsStream(path));       
+        DOMWriter	writer = new DOMWriter();            	       
+        return writer.write(document);	
 	}
 
 }
