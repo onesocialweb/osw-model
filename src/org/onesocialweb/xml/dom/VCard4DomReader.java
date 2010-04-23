@@ -178,7 +178,8 @@ public abstract class VCard4DomReader
 	protected EmailField readEmail(Element element) {
 		EmailField field=factory.email();
 		String emailTxt=DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4);
-		String typeTxt=	DomHelper.getElementText(element, VCard4.TYPE_ELEMENT,NS_VCARD4);
+		Element parametersElem= (Element) element.getElementsByTagNameNS(NS_VCARD4, "parameters").item(0);
+		String typeTxt=	DomHelper.getElementText(parametersElem, VCard4.TYPE_ELEMENT,NS_VCARD4);
 		
 		if ((emailTxt==null) || (!validEmail(emailTxt)) || (typeTxt==null))
 			return field;
@@ -211,9 +212,15 @@ public abstract class VCard4DomReader
 	protected TelField readTel(Element element) {
 		TelField field=factory.tel();
 		String telTxt=DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4);
-		String telType=DomHelper.getElementText(element, VCard4.TYPE_ELEMENT,NS_VCARD4);
-		
-		if ((telTxt==null) || (!validTel(telTxt)) || (telType==null))
+		Element parametersElem= (Element) element.getElementsByTagNameNS(NS_VCARD4, "parameters").item(0);
+		String telType=DomHelper.getElementText(parametersElem, VCard4.TYPE_ELEMENT,NS_VCARD4);
+
+		if ((telTxt!=null) &&  (telType!=null))		{
+			if (!telTxt.contains("tel:"))
+				telTxt="tel:" + telTxt;			
+		}
+		else return field;
+		if (!validTel(telTxt)) 
 			return field;
 		
 		if (telType.equalsIgnoreCase("work"))

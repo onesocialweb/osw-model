@@ -9,6 +9,7 @@ import org.onesocialweb.model.acl.AclRule;
 
 public class DefaultTimeZoneField extends TimeZoneField
 {
+
 	private TimeZone timezone;
 	
 	private TimeZoneField.Type type = TimeZoneField.Type.TEXT;
