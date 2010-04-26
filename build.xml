@@ -8,6 +8,7 @@
     <property name="jar.name"    value="osw-model"/>	
     <property name="lib.dir"     value="lib"/>
 	
+	<property file="${user.home}/.ant.build.properties" />
     <property file="${basedir}/build.properties"/>
 	
     <path id="classpath">
@@ -27,10 +28,11 @@
         <mkdir dir="${jar.dir}"/>
         <jar destfile="${jar.dir}/${jar.name}.jar" basedir="${classes.dir}" />
     </target>
-
-    <target name="run" depends="jar">
-        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
-    </target>
+	
+	<target name="deploy" depends="jar">
+	  <fail unless="onesocialweb.libs">Aborting. The Ant property "onesocialweb.libs" is not defined. Check the onesocialweb wiki (Building with Ant) for more details on this error.</fail>
+	  <copy file="${jar.dir}/${jar.name}.jar" todir="${onesocialweb.libs}" overwrite="true" />
+	</target>
 
     <target name="clean-build" depends="clean,jar"/>
 
