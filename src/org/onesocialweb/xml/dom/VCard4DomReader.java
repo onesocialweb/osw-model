@@ -188,6 +188,8 @@ public abstract class VCard4DomReader
 			field.setEmail(emailTxt, EmailField.Type.Work);
 		else if (typeTxt.equalsIgnoreCase("home"))		
 			field.setEmail(emailTxt, EmailField.Type.Home);
+		
+		field.setAclRules(readRules(element));
 		return field;
 	}
 	
@@ -206,6 +208,7 @@ public abstract class VCard4DomReader
 		childElement=DomHelper.getElement(element,"surname", NS_VCARD4);
 		field.setSurname(DomHelper.getElementText(childElement, VCard4.TEXT_ELEMENT,NS_VCARD4));
 				
+		field.setAclRules(readRules(element));
 		return field;
 	}
 	
@@ -239,6 +242,8 @@ public abstract class VCard4DomReader
 			field.setNumber(telTxt, TelField.Type.VIDEO);
 		else if (telType.equalsIgnoreCase("pager"))	
 			field.setNumber(telTxt, TelField.Type.PAGER);
+		
+		field.setAclRules(readRules(element));
 	
 		return field;
 	}
@@ -259,7 +264,9 @@ public abstract class VCard4DomReader
 				type=TimeZoneField.Type.TEXT;
 		}
 		
-		field.setTimeZone(tzTxt, type);		
+		
+		field.setTimeZone(tzTxt, type);
+		field.setAclRules(readRules(element));
 		return field;
 	}
 	
@@ -267,6 +274,7 @@ public abstract class VCard4DomReader
 		URLField field=factory.url();
 		field.setURL(DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4));
 		
+		field.setAclRules(readRules(element));
 		return field;
 	}
 	
