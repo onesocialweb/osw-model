@@ -239,7 +239,7 @@ public class VCard4XmlWriter extends XmlWriter {
 						attribute(Onesocialweb.PERMISSION_ATTRIBUTE, action.getPermission());
 						endOpen();
 						if (action.hasName())
-							buffer.append(action.getName());
+							buffer.append(xmlEncode(action.getName()));
 						closeTag("osw:" + Onesocialweb.ACL_ACTION_ELEMENT);
 					}
 				}
@@ -249,7 +249,7 @@ public class VCard4XmlWriter extends XmlWriter {
 						attribute(Onesocialweb.TYPE_ATTRIBUTE, subject.getType());
 						endOpen();
 						if (subject.hasName())
-							buffer.append(subject.getName());
+							buffer.append(xmlEncode(subject.getName()));
 						closeTag("osw:" + Onesocialweb.ACL_SUBJECT_ELEMENT);
 					}
 				}

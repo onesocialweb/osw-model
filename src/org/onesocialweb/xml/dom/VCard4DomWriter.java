@@ -16,9 +16,9 @@
  */
 package org.onesocialweb.xml.dom;
 
+import static org.onesocialweb.xml.dom.DomHelper.appendParametersNode;
 import static org.onesocialweb.xml.dom.DomHelper.appendTextNode;
 import static org.onesocialweb.xml.dom.DomHelper.setTextContent;
-import static org.onesocialweb.xml.dom.DomHelper.appendParametersNode;
 
 import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.vcard4.BirthdayField;
