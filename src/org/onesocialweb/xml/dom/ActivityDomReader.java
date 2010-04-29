@@ -93,6 +93,11 @@ public abstract class ActivityDomReader {
 
 		return entry;
 	}
+	
+	public String readActivityId(Element element) {
+		return DomHelper.getElementAttribute(element, "id");
+		
+	}
 
 	protected ActivityActor readActor(Element element) {
 		ActivityActor actor = factory.actor();
