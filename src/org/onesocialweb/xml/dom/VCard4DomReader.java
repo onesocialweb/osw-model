@@ -103,14 +103,17 @@ public abstract class VCard4DomReader
 	protected BirthdayField readBirthday(Element element) {
 		BirthdayField field=factory.birthday();
 		
-		String childElementName=element.getFirstChild().getNodeName();
+		Node firstChild=element.getChildNodes().item(0);
+		String childElementName=firstChild.getNodeName();
+		
 		if ((childElementName!=null) && (childElementName.length()!=0))
 			childElementName=childElementName.trim();
 		else return field;
 		
 		String elementText=DomHelper.getElementText(element, childElementName,NS_VCARD4);
-		if (!validDateOrTime(childElementName,elementText))
-			return field;
+
+	//	if (!validDateOrTime(childElementName,elementText))
+	//		return field;
 		
 		if (childElementName.equalsIgnoreCase("date"))
 			
@@ -168,7 +171,7 @@ public abstract class VCard4DomReader
 	
 	protected PhotoField readPhoto(Element element) {
 		PhotoField field=factory.photo();		
-		field.setUri(DomHelper.getElementText(element, VCard4.TYPE_ELEMENT,NS_VCARD4));		
+		field.setUri(DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4));		
 		
 		field.setAclRules(readRules(element));
 		return field;

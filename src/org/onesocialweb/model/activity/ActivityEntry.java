@@ -36,6 +36,7 @@ public interface ActivityEntry extends AtomEntry {
 	public List<ActivityObject> getObjects();
 
 	public List<ActivityVerb> getVerbs();
+
 	
 	public boolean hasAclRules();
 	
@@ -49,7 +50,7 @@ public interface ActivityEntry extends AtomEntry {
 	
 	public void removeVerb(ActivityVerb verb);
 	
-	public void removeAclRule(AclRule rule);
+	public void removeAclRule(AclRule rule);		
 
 	public void setAclRules(List<AclRule> rules);
 

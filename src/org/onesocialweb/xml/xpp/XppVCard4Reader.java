@@ -280,7 +280,7 @@ public abstract class XppVCard4Reader implements XppReader<Profile> {
 			String namespace = parser.getNamespace();
 			if (eventType == XmlPullParser.START_TAG) {
 				if (namespace.equals(VCard4.NAMESPACE)) {
-					if (name.equals(VCard4.TEXT_ELEMENT)) {
+					if (name.equals(VCard4.URI_ELEMENT)) {
 						emailAddrr=parser.nextText().trim();						
 					} 
 					else if (name.equals(VCard4.TYPE_ELEMENT)) {

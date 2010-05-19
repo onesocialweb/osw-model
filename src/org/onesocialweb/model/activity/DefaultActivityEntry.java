@@ -32,7 +32,8 @@ public class DefaultActivityEntry extends DefaultAtomEntry implements ActivityEn
 	private List<ActivityObject> objects = new ArrayList<ActivityObject>();
 	
 	private List<ActivityVerb> verbs = new ArrayList<ActivityVerb>();
-	
+		
+
 	@Override
 	public void addObject(ActivityObject object) {
 		this.objects.add(object);

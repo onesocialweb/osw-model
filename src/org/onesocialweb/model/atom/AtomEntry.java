@@ -33,6 +33,10 @@ public interface AtomEntry {
 	
 	public void addRecipient(AtomReplyTo to);
 	
+	public String getParentId();
+	
+	public String getParentJID();
+	
 	public List<AtomPerson> getAuthors();
 	
 	public List<AtomCategory> getCategories();
@@ -56,6 +60,10 @@ public interface AtomEntry {
 	public String getTitle();
 	
 	public Date getUpdated();
+	
+	public AtomLink getRepliesLink();
+	
+	public AtomReplyTo getReplyTo();
 	
 	public boolean hasAuthors();
 	
@@ -81,6 +89,8 @@ public interface AtomEntry {
 	
 	public boolean hasRecipients();
 	
+	public boolean hasReplies();
+	
 	public void removeAuthor(AtomPerson author);
 
 	public void removeCategory(AtomCategory category);
@@ -92,6 +102,10 @@ public interface AtomEntry {
 	public void removeLink(AtomLink link);
 	
 	public void removeRecipient(AtomReplyTo to);
+	
+	public void setParentId(String parentId);
+	
+	public void setParentJID(String parentId);
 
 	public void setAuthors(List<AtomPerson> authors);
 

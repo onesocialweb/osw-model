@@ -29,4 +29,7 @@ public class AtomThreading {
 	public static final String TYPE_ATTRIBUTE = "type";
 	
 	public static final String SOURCE_ATTRIBUTE = "source";
+	
+	public static final String COUNT="thr:count";
+	
 }

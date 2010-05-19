@@ -103,7 +103,7 @@ public abstract class VCard4DomWriter
 			appendTextNode(target, NS_VCARD4, "date", bday.getValue());
 		if (bday.getType().equals(BirthdayField.Type.Time))
 			appendTextNode(target, NS_VCARD4, "time", bday.getValue());
-		if (bday.getType().equals(BirthdayField.Type.Time))
+		if (bday.getType().equals(BirthdayField.Type.DateTime))
 			appendTextNode(target, NS_VCARD4, "date-time", bday.getValue());
 	}
 	

@@ -29,6 +29,10 @@ public interface AtomLink extends AtomCommon {
 	public String getTitle();
 
 	public String getType();
+	
+	public int getCount();
+	
+	public void setCount(int count);
 
 	public void setHref(final String href);
 

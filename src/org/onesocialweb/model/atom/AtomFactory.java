@@ -48,12 +48,13 @@ public abstract class AtomFactory {
 		return content;
 	}
 	
-	public AtomLink link(String href, String rel, String title, String type) {
+	public AtomLink link(String href, String rel, String title, String type, int count) {
 		AtomLink link = link();
 		link.setHref(href);
 		link.setRel(rel);
 		link.setTitle(title);
 		link.setType(type);
+		link.setCount(count);
 		return link;
 	}
 	

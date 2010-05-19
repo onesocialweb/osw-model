@@ -180,7 +180,8 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 	protected AtomLink parseLink(XmlPullParser parser) throws XmlPullParserException, IOException {	
 		final AtomLink link = atomFactory.link();
 		for (int i=0; i<parser.getAttributeCount(); i++) {
-			String name = parser.getAttributeName(i);
+			String name = parser.getAttributeName(i);  
+			
 			String value = parser.getAttributeValue(i).trim();
 			if (name.equals(Atom.HREF_ATTRIBUTE)) {
 				link.setHref(value);
@@ -194,6 +195,12 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 				link.setTitle(value);
 			}  else if (name.equals(Atom.TYPE_ATTRIBUTE)) {
 				link.setType(value);
+			} else { 
+				String prefix=parser.getAttributePrefix(i);	
+				String qualifiedName=prefix+":"+name;
+				if (qualifiedName.equalsIgnoreCase(AtomThreading.COUNT)){
+					link.setCount(Integer.parseInt(value));
+				}
 			}
 		}
 		return link;

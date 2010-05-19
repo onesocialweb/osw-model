@@ -98,7 +98,7 @@ public class ActivityXmlWriter extends XmlWriter {
 				}
 				closeTag("osw:" + Onesocialweb.ACL_RULE_ELEMENT);
 			}
-		}
+		}		
 		// Close
 		closeTag(Atom.ENTRY_ELEMENT);
 	}
@@ -163,6 +163,21 @@ public class ActivityXmlWriter extends XmlWriter {
 				endClosed();
 			}
 		}
+		
+		if ((entry.getParentId()!=null) && (entry.getParentJID()!=null)){
+			startTag(Atom.LINK_ELEMENT);			
+			attribute(Atom.REL_ATTRIBUTE, "alternate");
+			attribute(Atom.TYPE_ATTRIBUTE, "text/html");		
+			attribute(Atom.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());
+			endClosed();
+			
+			startTag("thr:" + AtomThreading.IN_REPLY_TO_ELEMENT);
+			attribute(AtomThreading.REF_ATTRIBUTE, entry.getParentId());
+			attribute(AtomThreading.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());			
+			endClosed();
+
+		}
+			
 	}
 	
 	private void dumpBody(AtomPerson person) {

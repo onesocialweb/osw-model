@@ -95,7 +95,10 @@ public abstract class AtomDomWriter {
 		if (entry.hasLinks()) {
 			for (AtomLink link : entry.getLinks()) {
 				Element e = (Element) target.appendChild(target.getOwnerDocument().createElementNS(Atom.NAMESPACE, Atom.LINK_ELEMENT));
-				write(link, e);
+				if (entry.hasReplies())
+					write(link, e, entry.getRepliesLink().getCount());
+				else 
+					write(link, e, 0);
 			}
 		}
 		
@@ -128,13 +131,15 @@ public abstract class AtomDomWriter {
 	/* (non-Javadoc)
 	 * @see org.onesocialweb.model.atom.AtomDomWriter#write(org.onesocialweb.model.atom.AtomLink, org.w3c.dom.Element)
 	 */
-	public void write(AtomLink link, Element target) {
+	public void write(AtomLink link, Element target, int replies) {
 		if (link.hasHref()) target.setAttribute(Atom.HREF_ATTRIBUTE, link.getHref());
 		if (link.hasHreflang()) target.setAttribute(Atom.HREFLANG_ATTRIBUTE, link.getHreflang());
 		if (link.hasLength()) target.setAttribute(Atom.LENGTH_ATTRIBUTE, link.getLength());
 		if (link.hasRel()) target.setAttribute(Atom.REL_ATTRIBUTE, link.getRel());
 		if (link.hasTitle()) target.setAttribute(Atom.TITLE_ATTRIBUTE, link.getTitle());
-		if (link.hasType()) target.setAttribute(Atom.TYPE_ATTRIBUTE, link.getType());
+		if (link.hasType()) target.setAttribute(Atom.TYPE_ATTRIBUTE, link.getType());	
+		if (replies>0)			
+			target.setAttributeNS(AtomThreading.NAMESPACE, AtomThreading.COUNT, ""+replies);
 	}
 		
 	/* (non-Javadoc)
