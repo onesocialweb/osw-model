@@ -105,7 +105,7 @@ public abstract class VCard4DomReader
 		Element e=null;
 		String childElementName="";
 		BirthdayField.Type type=null;
-		
+
 		NodeList childElements=element.getElementsByTagName("date-time");
 		if (childElements!=null)				
 				type=BirthdayField.Type.DateTime;			
@@ -126,13 +126,13 @@ public abstract class VCard4DomReader
 			if (e!=null)
 				childElementName=e.getNodeName();
 			else return field;
-		}			
+		}
 		else return field;
 					
 		
 		String elementText=DomHelper.getElementText(element, childElementName,NS_VCARD4);
 		if (!validDateOrTime(childElementName,elementText))
-			return field; 
+			return field;
 		
 		field.setBirthday(elementText, type);
 		

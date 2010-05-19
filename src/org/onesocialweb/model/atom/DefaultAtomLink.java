@@ -29,6 +29,18 @@ public class DefaultAtomLink extends DefaultAtomCommon implements AtomLink {
 	private String type;
 
 	private String length;
+	
+	private int count;
+
+	@Override
+	public int getCount() {
+		return count;
+	}
+
+	@Override
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	@Override
 	public String getHref() {

@@ -33,6 +33,11 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	private List<AtomReplyTo> recipients = new ArrayList<AtomReplyTo>();
 
 	private String id;
+	
+	private String parentId=null;
+	
+	private String parentJID=null;
+	
 
 	private List<AtomLink> links = new ArrayList<AtomLink>();
 
@@ -45,6 +50,7 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	private String title;
 
 	private Date updated;
+
 
 	@Override
 	public void addAuthor(AtomPerson author) {
@@ -75,6 +81,28 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	public void addRecipient(AtomReplyTo to) {
 		this.recipients.add(to);
 	}
+	
+
+	
+	@Override
+	public String getParentId() {
+		return parentId;
+	}
+
+	@Override
+	public void setParentJID(String parentJID) {
+		this.parentJID = parentJID;
+	}
+	
+	@Override
+	public String getParentJID() {
+		return parentJID;
+	}
+
+	@Override
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
 
 	@Override
 	public List<AtomPerson> getAuthors() {
@@ -99,6 +127,24 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	@Override
 	public List<AtomReplyTo> getRecipients() {
 		return recipients;
+	}
+	
+	@Override
+	public AtomLink getRepliesLink(){
+		for (AtomLink link: links){
+			if (link.getRel().equalsIgnoreCase("replies"))
+				return link;
+		}
+		return null;
+	}
+	
+	@Override
+	public AtomReplyTo getReplyTo(){
+		for (AtomReplyTo reply: recipients){
+			if (reply.getRef()!=null && (reply.getRef().length()>0))
+				return reply;
+		}
+		return null;
 	}
 
 	@Override
@@ -154,6 +200,18 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	@Override
 	public boolean hasContributors() {
 		return (contributors != null && contributors.size() > 0);
+	}
+	
+	@Override
+	public boolean hasReplies() {
+		boolean result=false;
+		if (links == null || links.size() < 0)
+			return result;
+		for (AtomLink link: links){
+			if (link.getRel().equalsIgnoreCase("replies"))
+				result= true;
+		}
+		return result;
 	}
 
 	@Override

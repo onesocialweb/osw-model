@@ -23,6 +23,8 @@ import org.onesocialweb.model.activity.ActivityEntry;
 import org.onesocialweb.model.activity.ActivityFactory;
 import org.onesocialweb.model.activity.ActivityObject;
 import org.onesocialweb.model.activity.ActivityVerb;
+import org.onesocialweb.model.atom.AtomLink;
+import org.onesocialweb.model.atom.AtomReplyTo;
 import org.onesocialweb.xml.namespace.Activitystreams;
 import org.onesocialweb.xml.namespace.Atom;
 import org.onesocialweb.xml.namespace.AtomThreading;
@@ -87,11 +89,41 @@ public abstract class ActivityDomReader {
 		// Get the reply-to
 		NodeList replies = element.getElementsByTagNameNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT);
 		for(int i=0; i < replies.getLength(); i++) {
-			entry.addRecipient(atomDomReader.readReplyTo((Element) replies.item(i)));
+			AtomReplyTo replyTo= atomDomReader.readReplyTo((Element) replies.item(i));
+			if (replyTo.getHref()!=null){
+				entry.setParentId(readParentId(replyTo.getHref()));
+				entry.setParentJID(readParentJID(replyTo.getHref()));
+			}				
+			entry.addRecipient(replyTo);
 		}
-
-
+		
+		//Get the links...
+		NodeList links = element.getElementsByTagNameNS(Atom.NAMESPACE, Atom.LINK_ELEMENT);
+		for(int i=0; i < links.getLength(); i++) {
+			AtomLink link= atomDomReader.readLink(((Element) links.item(i)));
+			entry.addLink(link);		
+		}
+		
+		
 		return entry;
+	}
+	
+	public String readParentJID(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("?");
+		return href.substring(5, i);
+		
+	}
+	
+	public String readParentId(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("item=");
+		return href.substring(5+i, href.length());
+		
 	}
 	
 	public String readActivityId(Element element) {
