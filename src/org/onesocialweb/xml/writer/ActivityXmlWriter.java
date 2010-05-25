@@ -83,7 +83,7 @@ public class ActivityXmlWriter extends XmlWriter {
 						startTag("osw:" + Onesocialweb.ACL_ACTION_ELEMENT);
 						attribute(Onesocialweb.PERMISSION_ATTRIBUTE, action.getPermission());
 						endOpen();
-						if (action.hasName()) buffer.append(action.getName());
+						if (action.hasName()) buffer.append(xmlEncode(action.getName()));
 						closeTag("osw:" + Onesocialweb.ACL_ACTION_ELEMENT);
 					}
 				}
@@ -92,7 +92,7 @@ public class ActivityXmlWriter extends XmlWriter {
 						startTag("osw:" + Onesocialweb.ACL_SUBJECT_ELEMENT);
 						attribute(Onesocialweb.TYPE_ATTRIBUTE, subject.getType());
 						endOpen();
-						if (subject.hasName()) buffer.append(subject.getName());
+						if (subject.hasName()) buffer.append(xmlEncode(subject.getName()));
 						closeTag("osw:" + Onesocialweb.ACL_SUBJECT_ELEMENT);
 					}
 				}
@@ -137,7 +137,7 @@ public class ActivityXmlWriter extends XmlWriter {
 				if (content.hasType()) attribute(Atom.TYPE_ATTRIBUTE, content.getType());
 				if (content.hasSrc()) attribute(Atom.SRC_ATTRIBUTE, content.getSrc());
 				endOpen();
-				if (content.hasValue()) buffer.append(content.getValue());
+				if (content.hasValue()) buffer.append(xmlEncode(content.getValue()));
 				closeTag(Atom.CONTENT_ELEMENT);
 			}
 		}

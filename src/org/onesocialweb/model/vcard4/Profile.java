@@ -19,6 +19,7 @@ package org.onesocialweb.model.vcard4;
 
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
@@ -87,6 +88,48 @@ public abstract class Profile {
 		} else {
 			return null;
 		}
+	}
+	
+	public String getEmail(){
+		if (hasField(EmailField.NAME)){		
+			return ((EmailField) getField(EmailField.NAME)).getEmail();
+		}
+		else return null;
+	}
+	
+	public String getName(){
+		if (hasField(NameField.NAME)){		
+			return ((NameField) getField(NameField.NAME)).getValue();
+		}
+		else return null;
+	}
+	
+	public String getTel(){
+		if (hasField(TelField.NAME)){		
+			return ((TelField) getField(TelField.NAME)).getNumber();
+		}
+		else return null;
+	}
+	
+	public String getTimeZone(){
+		if (hasField(TimeZoneField.NAME)){		
+			return ((TimeZoneField) getField(TimeZoneField.NAME)).getTimeZone();
+		}
+		else return null;
+	}
+	
+	public TimeZone getJavaTimeZone(){
+		if (hasField(TimeZoneField.NAME)){		
+			return ((TimeZoneField) getField(TimeZoneField.NAME)).getJavaTimeZone();
+		}
+		else return null;
+	}
+	
+	public String getUrl(){
+		if (hasField(URLField.NAME)){		
+			return ((URLField) getField(URLField.NAME)).getURL();
+		}
+		else return null;
 	}
 	
 	public String toString() {

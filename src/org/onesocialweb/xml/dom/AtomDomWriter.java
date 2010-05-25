@@ -16,7 +16,8 @@
  */
 package org.onesocialweb.xml.dom;
 
-import static org.onesocialweb.xml.dom.DomHelper.*;
+import static org.onesocialweb.xml.dom.DomHelper.appendTextNode;
+import static org.onesocialweb.xml.dom.DomHelper.setTextContent;
 
 import java.util.Date;
 

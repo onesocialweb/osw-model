@@ -45,4 +45,20 @@ public class VCard4 {
 	
 	public static final String GENDER_ELEMENT = "sex";
 	
+	public static final String EMAIL_ELEMENT = "email";
+	
+	public static final String N_ELEMENT = "n";
+	
+	public static final String TEL_ELEMENT = "tel";
+	
+	public static final String TZ_ELEMENT = "tz";
+	
+	public static final String URL_ELEMENT = "url";
+	
+	public static final String TYPE_ELEMENT = "type";
+	
+	public static final String PARAMETERS_ELEMENT = "parameters";
+	
+	
+	
 }

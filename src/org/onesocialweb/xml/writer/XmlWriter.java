@@ -16,6 +16,8 @@
  */
 package org.onesocialweb.xml.writer;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 public class XmlWriter {
 
 	protected StringBuffer buffer;
@@ -42,14 +44,18 @@ public class XmlWriter {
 	}
 	
 	protected void attribute(String key, String value) {
-		buffer.append(" " + key + "=\"" + value + "\"");
+		buffer.append(" " + key + "=\"" + xmlEncode(value) + "\"");
 	}
 	
 	protected void text(String tag, String value) {
 		startTag(tag);
 		endOpen();
-		buffer.append(value);
+		buffer.append(xmlEncode(value));
 		closeTag(tag);
+	}
+	
+	protected String xmlEncode(String originalText) {
+		return StringEscapeUtils.escapeXml(originalText);
 	}
 	
 }

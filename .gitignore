@@ -2,6 +2,7 @@
 .project
 .settings
 .classpath
+build.properties
 bin/
 build/
 doc/

@@ -16,16 +16,10 @@
  */
 package org.onesocialweb.model.activity;
 
-import static org.junit.Assert.assertNotNull;
-
 import java.io.IOException;
 import java.util.Calendar;
 
 import org.dom4j.DocumentException;
-import org.dom4j.dom.DOMDocument;
-import org.dom4j.io.DOMReader;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
 import org.junit.Test;
 import org.onesocialweb.model.acl.AclAction;
 import org.onesocialweb.model.acl.AclFactory;
@@ -38,11 +32,9 @@ import org.onesocialweb.model.atom.AtomFactory;
 import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.DefaultAtomFactory;
 import org.onesocialweb.model.atom.DefaultAtomHelper;
-import org.onesocialweb.xml.dom.ActivityDomWriter;
-import org.onesocialweb.xml.dom.imp.DefaultActivityDomWriter;
-import org.w3c.dom.Element;
+import org.onesocialweb.xml.writer.ActivityXmlWriter;
 
-public class ActivityDomWriterTest {
+public class ActivityXmlWriterTest {
 
 	@Test
 	public void entryToXML() throws DocumentException, IOException {
@@ -86,15 +78,9 @@ public class ActivityDomWriterTest {
 		rule.addSubject(aclFactory.aclSubject(null, AclSubject.EVERYONE));
 		entry.addAclRule(rule);
 		
-
-		DOMDocument document = new DOMDocument();
-		ActivityDomWriter activityDomWriter = new DefaultActivityDomWriter();
-		Element element = activityDomWriter.toElement(entry, document);
-		assertNotNull(element);
-		
-		DOMReader reader = new DOMReader();		
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        XMLWriter xmlWriter = new XMLWriter( System.out, format );
-        xmlWriter.write(reader.read(document));
+		//Very simple stuff...
+		ActivityXmlWriter writer=new ActivityXmlWriter();
+		System.out.println(writer.toXml(entry));
+				
 	}
 }

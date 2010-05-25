@@ -48,5 +48,29 @@ public class DefaultVCard4Factory extends VCard4Factory {
 	public Profile profile() {
 		return new DefaultProfile();
 	}
+	
+	@Override
+	public EmailField email(){
+		return new DefaultEmailField();
+	}
+	
+	@Override
+	public NameField name(){
+		return new DefaultNameField();
+	}
+	
+	@Override
+	public TelField tel(){
+		return new DefaultTelField();
+	}
+	
+	@Override
+	public TimeZoneField timeZone(){
+		return new DefaultTimeZoneField();
+	}
+	
+	public URLField url(){
+		return new DefaultURLField();
+	}
 
 }

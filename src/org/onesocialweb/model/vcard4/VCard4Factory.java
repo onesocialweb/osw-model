@@ -33,6 +33,16 @@ public abstract class VCard4Factory {
 	
 	public abstract BirthdayField birthday();
 	
+	public abstract EmailField email();
+	
+	public abstract NameField name();
+	
+	public abstract TelField tel();
+	
+	public abstract TimeZoneField timeZone();
+	
+	public abstract URLField url();
+	
 	public FullNameField fullname(String name) {
 		final FullNameField field = fullname();
 		field.setFullName(name);
@@ -60,6 +70,47 @@ public abstract class VCard4Factory {
 	public BirthdayField birthday(Date date) {
 		final BirthdayField field = birthday();
 		field.setDate(date);
+		return field;
+	}
+	
+	public EmailField email(String email){
+		final EmailField field = email();
+		field.setEmail(email);
+		return field;
+	}
+	
+	
+	public TelField tel(String tel){
+		final TelField field = tel();
+		field.setNumber(tel, TelField.Type.VOICE);
+		return field;
+	}
+	
+	public TelField tel(String tel, TelField.Type type){
+		final TelField field = tel();
+		field.setNumber(tel, type);
+		return field;
+	}
+	
+	public TimeZoneField timeZone(String tzID){
+		final TimeZoneField field= timeZone();
+		field.setTimeZone(tzID, TimeZoneField.Type.TEXT);
+		return field;
+	}
+	
+	public URLField url(String url){
+		final URLField field=url();
+		field.setURL(url);
+		return field;
+	}
+	
+	public NameField name(String prefix, String given, String surname, String suffix)
+	{
+		final NameField field=name();
+		field.setPrefix(prefix);
+		field.setGiven(given);
+		field.setSurname(surname);
+		field.setSuffix(suffix);
 		return field;
 	}
 

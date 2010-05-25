@@ -61,11 +61,31 @@ public class VCard4XmlWriterTest {
 		Field photoField = profileFactory.photo("http://wonderland.lit/alice.jpg");
 		photoField.setAclRules(rules);
 		
+		Field nameField =profileFactory.name("Prof. Dr", "Otto", "Schumacher", "Jr.");
+		nameField.setAclRules(rules);
+		
+		Field emailField= profileFactory.email("daianacheng@gmail.com");
+		emailField.setAclRules(rules);
+		
+		Field telField=profileFactory.tel("+4917667027845");
+		telField.setAclRules(rules);
+		
+		Field tzField=profileFactory.timeZone("America/Miami");
+		tzField.setAclRules(rules);
+		
+		Field urlField=profileFactory.url("http://www.flickr.com/photos/dianacheng");
+		urlField.setAclRules(rules);
+		
 		try {
 			profile.addField(fnField);
 			profile.addField(sexField);
 			profile.addField(photoField);
 			profile.addField(noteField);
+			profile.addField(nameField);
+			profile.addField(emailField);
+			profile.addField(telField);
+			profile.addField(tzField);
+			profile.addField(urlField);
 		} catch (CardinalityException e) {
 		} catch (UnsupportedFieldException e) {	
 		}

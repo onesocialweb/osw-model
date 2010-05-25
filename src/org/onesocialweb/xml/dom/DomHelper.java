@@ -69,4 +69,16 @@ public class DomHelper {
 			element.appendChild(element.getOwnerDocument().createTextNode(content));
 		}		
 	}
+	
+	public static Element appendParametersNode(Element element, String namespace, String name, String content) {
+		final Document document = element.getOwnerDocument();		
+		final Element parametersNode = document.createElementNS(namespace, "parameters");
+		element.appendChild(parametersNode);
+		
+		final Element childNode = document.createElementNS(namespace, name);	
+		parametersNode.appendChild(childNode);
+		
+		setTextContent(childNode, content);				
+		return element;
+	}
 }

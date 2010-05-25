@@ -21,11 +21,16 @@ import java.util.List;
 
 import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.vcard4.BirthdayField;
+import org.onesocialweb.model.vcard4.EmailField;
 import org.onesocialweb.model.vcard4.FullNameField;
 import org.onesocialweb.model.vcard4.GenderField;
+import org.onesocialweb.model.vcard4.NameField;
 import org.onesocialweb.model.vcard4.NoteField;
 import org.onesocialweb.model.vcard4.PhotoField;
 import org.onesocialweb.model.vcard4.Profile;
+import org.onesocialweb.model.vcard4.TelField;
+import org.onesocialweb.model.vcard4.TimeZoneField;
+import org.onesocialweb.model.vcard4.URLField;
 import org.onesocialweb.model.vcard4.VCard4Factory;
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
@@ -73,6 +78,16 @@ public abstract class VCard4DomReader
 						profile.addField(readNote(e));
 					} else if (name.equals(VCard4.PHOTO_ELEMENT)) {
 						profile.addField(readPhoto(e));				
+					}else if (name.equals(VCard4.EMAIL_ELEMENT)) {
+						profile.addField(readEmail(e));				
+					}else if (name.equals(VCard4.N_ELEMENT)) {
+						profile.addField(readName(e));				
+					}else if (name.equals(VCard4.TEL_ELEMENT)) {
+						profile.addField(readTel(e));				
+					}else if (name.equals(VCard4.TZ_ELEMENT)) {
+						profile.addField(readTimeZone(e));				
+					}else if (name.equals(VCard4.URL_ELEMENT)) {
+						profile.addField(readURL(e));				
 					}
 				} catch (CardinalityException ex) {
 					
@@ -111,7 +126,7 @@ public abstract class VCard4DomReader
 	
 	protected FullNameField readFullName(Element element) {
 		FullNameField field=factory.fullname();		
-		field.setFullName(DomHelper.getElementText(element, "text",NS_VCARD4));		
+		field.setFullName(DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4));		
 		
 		field.setAclRules(readRules(element));
 		return field;
@@ -145,7 +160,7 @@ public abstract class VCard4DomReader
 	
 	protected NoteField readNote(Element element) {
 		NoteField field=factory.note();		
-		field.setNote(DomHelper.getElementText(element, "text",NS_VCARD4));
+		field.setNote(DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4));
 		
 		field.setAclRules(readRules(element));		
 		return field;
@@ -153,11 +168,118 @@ public abstract class VCard4DomReader
 	
 	protected PhotoField readPhoto(Element element) {
 		PhotoField field=factory.photo();		
-		field.setUri(DomHelper.getElementText(element, "uri",NS_VCARD4));		
+		field.setUri(DomHelper.getElementText(element, VCard4.TYPE_ELEMENT,NS_VCARD4));		
 		
 		field.setAclRules(readRules(element));
 		return field;
 	}
+	
+	
+	protected EmailField readEmail(Element element) {
+		EmailField field=factory.email();
+		String emailTxt=DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4);
+		Element parametersElem= (Element) element.getElementsByTagNameNS(NS_VCARD4, "parameters").item(0);
+		String typeTxt=	DomHelper.getElementText(parametersElem, VCard4.TYPE_ELEMENT,NS_VCARD4);
+		
+		if ((emailTxt==null) || (!validEmail(emailTxt)) || (typeTxt==null))
+			return field;
+		
+		if (typeTxt.equalsIgnoreCase("work"))		
+			field.setEmail(emailTxt, EmailField.Type.Work);
+		else if (typeTxt.equalsIgnoreCase("home"))		
+			field.setEmail(emailTxt, EmailField.Type.Home);
+		
+		field.setAclRules(readRules(element));
+		return field;
+	}
+	
+	protected NameField readName(Element element) {
+		NameField field=factory.name();
+		
+		Element childElement=DomHelper.getElement(element, "given", NS_VCARD4);
+		field.setGiven(DomHelper.getElementText(childElement, VCard4.TEXT_ELEMENT,NS_VCARD4));
+		
+		childElement=DomHelper.getElement(element,"prefix", NS_VCARD4);
+		field.setPrefix(DomHelper.getElementText(childElement, VCard4.TEXT_ELEMENT,NS_VCARD4));
+		
+		childElement=DomHelper.getElement(element,"suffix", NS_VCARD4);
+		field.setSuffix(DomHelper.getElementText(childElement, VCard4.TEXT_ELEMENT,NS_VCARD4));
+		
+		childElement=DomHelper.getElement(element,"surname", NS_VCARD4);
+		field.setSurname(DomHelper.getElementText(childElement, VCard4.TEXT_ELEMENT,NS_VCARD4));
+				
+		field.setAclRules(readRules(element));
+		return field;
+	}
+	
+	protected TelField readTel(Element element) {
+		TelField field=factory.tel();
+		String telTxt=DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4);
+		Element parametersElem= (Element) element.getElementsByTagNameNS(NS_VCARD4, "parameters").item(0);
+		String telType=DomHelper.getElementText(parametersElem, VCard4.TYPE_ELEMENT,NS_VCARD4);
+
+		if ((telTxt!=null) &&  (telType!=null))		{
+			if (!telTxt.contains("tel:"))
+				telTxt="tel:" + telTxt;			
+		}
+		else return field;
+		if (!validTel(telTxt)) 
+			return field;
+		
+		if (telType.equalsIgnoreCase("work"))
+			field.setNumber(telTxt, TelField.Type.WORK);
+		else if (telType.equalsIgnoreCase("home"))
+			field.setNumber(telTxt, TelField.Type.HOME);
+		else if (telType.equalsIgnoreCase("text"))
+			field.setNumber(telTxt, TelField.Type.TEXT);
+		else if (telType.equalsIgnoreCase("voice"))
+			field.setNumber(telTxt, TelField.Type.VOICE);
+		else if (telType.equalsIgnoreCase("fax"))
+			field.setNumber(telTxt, TelField.Type.FAX);
+		else if (telType.equalsIgnoreCase("cell"))
+			field.setNumber(telTxt, TelField.Type.CELL);
+		else if (telType.equalsIgnoreCase("video"))
+			field.setNumber(telTxt, TelField.Type.VIDEO);
+		else if (telType.equalsIgnoreCase("pager"))	
+			field.setNumber(telTxt, TelField.Type.PAGER);
+		
+		field.setAclRules(readRules(element));
+	
+		return field;
+	}
+	
+	protected TimeZoneField readTimeZone(Element element) {
+		TimeZoneField field=factory.timeZone();
+		TimeZoneField.Type type=null;
+		
+		String tzTxt=DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4);
+		
+		if ((tzTxt!=null) && (tzTxt.length()!=0))
+			type=TimeZoneField.Type.URI;
+		else{
+			tzTxt=DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4);
+			if ((tzTxt==null) || (tzTxt.length()==0))
+				return field;
+			else 
+				type=TimeZoneField.Type.TEXT;
+		}
+		
+		
+		field.setTimeZone(tzTxt, type);
+		field.setAclRules(readRules(element));
+		return field;
+	}
+	
+	protected URLField readURL(Element element) {
+		URLField field=factory.url();
+		field.setURL(DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4));
+		
+		field.setAclRules(readRules(element));
+		return field;
+	}
+	
+	
+
 	
 	protected List<AclRule> readRules(Element element) {
 		final List<AclRule> rules = new ArrayList<AclRule>();
@@ -167,6 +289,21 @@ public abstract class VCard4DomReader
 		}
 		return rules;
 	}
+	
+	private boolean validEmail(String email)
+	{
+		if ((email.length()!=0) && (email.matches(".+@.+\\.[a-z]+")) )
+			return true;
+		else return false;
+	}
+	
+	private boolean validTel(String tel)
+	{
+		if ((tel.length()!=0) && (tel.matches("^tel:((?:\\+[\\d().-]*\\d[\\d().-]*|[0-9A-F*#().-]*[0-9A-F*#][0-9A-F*#().-]*(?:;[a-z\\d-]+(?:=(?:[a-z\\d\\[\\]\\/:&+$_!~*'().-]|%[\\dA-F]{2})+)?)*;phone-context=(?:\\+[\\d().-]*\\d[\\d().-]*|(?:[a-z0-9]\\.|[a-z0-9][a-z0-9-]*[a-z0-9]\\.)*(?:[a-z]|[a-z][a-z0-9-]*[a-z0-9])))(?:;[a-z\\d-]+(?:=(?:[a-z\\d\\[\\]\\/:&+$_!~*'().-]|%[\\dA-F]{2})+)?)*(?:,(?:\\+[\\d().-]*\\d[\\d().-]*|[0-9A-F*#().-]*[0-9A-F*#][0-9A-F*#().-]*(?:;[a-z\\d-]+(?:=(?:[a-z\\d\\[\\]\\/:&+$_!~*'().-]|%[\\dA-F]{2})+)?)*;phone-context=\\+[\\d().-]*\\d[\\d().-]*)(?:;[a-z\\d-]+(?:=(?:[a-z\\d\\[\\]\\/:&+$_!~*'().-]|%[\\dA-F]{2})+)?)*)*)$")))
+			return true;
+		else return false;
+	}
+	
 	
 	private boolean validDateOrTime(String type,String dateOrTime)
 	{
