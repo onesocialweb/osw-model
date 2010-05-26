@@ -102,23 +102,39 @@ public abstract class VCard4DomReader
 	
 	protected BirthdayField readBirthday(Element element) {
 		BirthdayField field=factory.birthday();
+		Element e=null;
+		String childElementName="";
+		BirthdayField.Type type=null;
 		
-		String childElementName=element.getFirstChild().getNodeName();
-		if ((childElementName!=null) && (childElementName.length()!=0))
-			childElementName=childElementName.trim();
+		NodeList childElements=element.getElementsByTagName("date-time");
+		if (childElements!=null)				
+				type=BirthdayField.Type.DateTime;			
+		else{
+			childElements=element.getElementsByTagName("date");
+			if (childElements!=null)
+				type=BirthdayField.Type.Date;			
+			else {
+				childElements=element.getElementsByTagName("time");
+				if (childElements!=null)
+					type=BirthdayField.Type.Time;				
+				else return field;				
+			}
+		}
+		
+		if (childElements!=null){
+			e=(Element)childElements.item(0);
+			if (e!=null)
+				childElementName=e.getNodeName();
+			else return field;
+		}			
 		else return field;
+					
 		
 		String elementText=DomHelper.getElementText(element, childElementName,NS_VCARD4);
 		if (!validDateOrTime(childElementName,elementText))
-			return field;
+			return field; 
 		
-		if (childElementName.equalsIgnoreCase("date"))
-			
-			field.setBirthday(elementText, BirthdayField.Type.Date);
-		else if (childElementName.equalsIgnoreCase("time"))
-			field.setBirthday(elementText, BirthdayField.Type.Time);
-		else if (childElementName.equalsIgnoreCase("date-time"))
-			field.setBirthday(elementText, BirthdayField.Type.DateTime);
+		field.setBirthday(elementText, type);
 		
 		field.setAclRules(readRules(element));
 		return field;
@@ -168,7 +184,7 @@ public abstract class VCard4DomReader
 	
 	protected PhotoField readPhoto(Element element) {
 		PhotoField field=factory.photo();		
-		field.setUri(DomHelper.getElementText(element, VCard4.TYPE_ELEMENT,NS_VCARD4));		
+		field.setUri(DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4));		
 		
 		field.setAclRules(readRules(element));
 		return field;
@@ -307,14 +323,20 @@ public abstract class VCard4DomReader
 	
 	private boolean validDateOrTime(String type,String dateOrTime)
 	{
-		if ((type.equals("date")) && (dateOrTime.matches("\\d{8}|\\d{4}-\\d\\d|--\\d\\d(\\d\\d)?|---\\d\\d")))
+	/*	if ((type.equals("date")) && (dateOrTime.matches("\\d{8}|\\d{4}-\\d\\d|--\\d\\d(\\d\\d)?|---\\d\\d")))
 		return true;
 		else if ((type.equals("time")) && (dateOrTime.matches("(\\d\\d(\\d\\d(\\d\\d)?)?|-\\d\\d(\\d\\d?)|--\\d\\d)(Z|[+\\-]\\d\\d(\\d\\d)?)?")))
 			return true;
 		else if  ((type.equals("date-time") && (dateOrTime.matches("(\\d{8}|--\\d{4}|---\\d\\d)T\\d\\d(\\d\\d(\\d\\d)?)?(Z|[+\\-]\\d\\d(\\d\\d)?)?"))))
 			return true;
 		else 
-			return false;
+			return false;*/
+		
+		//The above code validates a date or date-time according to the Vcard4 schema.
+		// The code below validates it according to Atom...
+		if (dateOrTime.matches("(\\d{4})(?:-(\\d{2}))?(?:-(\\d{2}))?(?:([Tt])?(?:(\\d{2}))?(?::(\\d{2}))?(?::(\\d{2}))?(?:\\.(\\d{3}))?)?([Zz])?(?:([+-])(\\d{2}):(\\d{2}))?"))
+			return true;
+		return false;
 	}
 	
 	protected abstract VCard4Factory getProfileFactory();

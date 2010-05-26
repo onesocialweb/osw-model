@@ -43,7 +43,7 @@ public class VCard4 {
 	
 	public static final String NOTE_ELEMENT = "note";
 	
-	public static final String GENDER_ELEMENT = "sex";
+	public static final String GENDER_ELEMENT = "gender";
 	
 	public static final String EMAIL_ELEMENT = "email";
 	
