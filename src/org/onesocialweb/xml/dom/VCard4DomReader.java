@@ -121,16 +121,19 @@ public abstract class VCard4DomReader
 			}
 		}
 		
+
 		if (childElements!=null){
 			e=(Element)childElements.item(0);
 			if (e!=null)
 				childElementName=e.getNodeName();
 			else return field;
 		}
+
 		else return field;
 					
 		
 		String elementText=DomHelper.getElementText(element, childElementName,NS_VCARD4);
+
 		if (!validDateOrTime(childElementName,elementText))
 			return field;
 		
