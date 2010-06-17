@@ -37,9 +37,7 @@ public class DefaultTimeZoneField extends TimeZoneField
 	
 	@Override
 	public void setTimeZone(String value, Type type) {
-		TimeZone tz=TimeZone.getTimeZone(value);
-		if (!tz.getID().equalsIgnoreCase(value))
-			tz=TimeZone.getDefault();		
+		TimeZone tz=TimeZone.getTimeZone(value);	
 		setJavaTimeZone(tz);		
 		this.type = type;
 	}
