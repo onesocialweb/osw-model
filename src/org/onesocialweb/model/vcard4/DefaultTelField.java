@@ -18,6 +18,8 @@ public class DefaultTelField extends TelField
 	
 	@Override
 	public String getNumber() {
+		if (tel.contains("tel:"))
+			return tel.substring(4);
 		return tel;
 	}
 

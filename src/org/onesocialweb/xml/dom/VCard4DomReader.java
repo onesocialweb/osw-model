@@ -193,7 +193,7 @@ public abstract class VCard4DomReader
 	
 	protected EmailField readEmail(Element element) {
 		EmailField field=factory.email();
-		String emailTxt=DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4);
+		String emailTxt=DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4);
 		Element parametersElem= (Element) element.getElementsByTagNameNS(NS_VCARD4, "parameters").item(0);
 		String typeTxt=	DomHelper.getElementText(parametersElem, VCard4.TYPE_ELEMENT,NS_VCARD4);
 		

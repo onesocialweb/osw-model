@@ -22,15 +22,14 @@ public abstract class NameField extends Field
 	
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer();
-		buffer.append(getName() + ": " );
-		if (getPrefix()!=null)
+		StringBuffer buffer = new StringBuffer();		
+		if ((getPrefix()!=null) && (getPrefix().length()!=0))
 			buffer.append(getPrefix() + " ");
-		if (getGiven()!=null)
+		if ((getGiven()!=null) && (getGiven().length()!=0))
 			buffer.append(getGiven() + " ");
-		if (getSurname()!=null)
+		if ((getSurname()!=null) && (getSurname().length()!=0))
 			buffer.append(getSurname() + " ");
-		if (getSuffix()!=null)
+		if ((getSuffix()!=null) && (getSuffix().length()!=0))
 			buffer.append(getSuffix() + " ");
 		return  buffer.toString();
 	}
