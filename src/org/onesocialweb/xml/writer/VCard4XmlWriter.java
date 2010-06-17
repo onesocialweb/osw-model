@@ -141,7 +141,7 @@ public class VCard4XmlWriter extends XmlWriter {
 			text(VCard4.TYPE_ELEMENT, "work" );		
 		closeTag(VCard4.PARAMETERS_ELEMENT);
 		
-		text(VCard4.TEXT_ELEMENT, field.getValue());
+		text(VCard4.URI_ELEMENT, field.getValue());
 		dumpAclRules(field);
 		closeTag(VCard4.EMAIL_ELEMENT);
 	}
