@@ -131,7 +131,7 @@ public abstract class VCard4DomReader
 					
 		
 		String elementText=DomHelper.getElementText(element, childElementName,NS_VCARD4);
-		if (!validDateOrTime(childElementName,elementText))
+		if (elementText == null || !validDateOrTime(childElementName,elementText))
 			return field; 
 		
 		field.setBirthday(elementText, type);
