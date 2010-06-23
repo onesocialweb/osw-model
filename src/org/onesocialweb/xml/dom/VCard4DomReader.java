@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.onesocialweb.model.acl.AclRule;
+import org.onesocialweb.model.atom.DefaultAtomHelper;
 import org.onesocialweb.model.vcard4.BirthdayField;
 import org.onesocialweb.model.vcard4.EmailField;
 import org.onesocialweb.model.vcard4.FullNameField;
@@ -321,7 +322,7 @@ public abstract class VCard4DomReader
 	}
 	
 	
-	private boolean validDateOrTime(String type,String dateOrTime)
+	private boolean validDateOrTime(String type, String dateOrTime)
 	{
 	/*	if ((type.equals("date")) && (dateOrTime.matches("\\d{8}|\\d{4}-\\d\\d|--\\d\\d(\\d\\d)?|---\\d\\d")))
 		return true;
@@ -334,9 +335,12 @@ public abstract class VCard4DomReader
 		
 		//The above code validates a date or date-time according to the Vcard4 schema.
 		// The code below validates it according to Atom...
-		if (dateOrTime.matches("(\\d{4})(?:-(\\d{2}))?(?:-(\\d{2}))?(?:([Tt])?(?:(\\d{2}))?(?::(\\d{2}))?(?::(\\d{2}))?(?:\\.(\\d{3}))?)?([Zz])?(?:([+-])(\\d{2}):(\\d{2}))?"))
+	
+	//	if (dateOrTime.matches("(\\d{4})(?:-(\\d{2}))?(?:-(\\d{2}))?(?:([Tt])?(?:(\\d{2}))?(?::(\\d{2}))?(?::(\\d{2}))?(?:\\.(\\d{3}))?)?([Zz])?(?:([+-])(\\d{2}):(\\d{2}))?"))
+		
+		if ((dateOrTime!=null) && (dateOrTime.length()!=0))
 			return true;
-		return false;
+		return false; 
 	}
 	
 	protected abstract VCard4Factory getProfileFactory();
