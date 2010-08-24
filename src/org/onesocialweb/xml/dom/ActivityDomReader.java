@@ -12,7 +12,7 @@
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
- *    
+ *
  */
 package org.onesocialweb.xml.dom;
 
@@ -48,7 +48,7 @@ public abstract class ActivityDomReader {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.onesocialweb.model.activity.ActivityDomReader#readEntry(org.w3c.dom
 	 * .Element)
@@ -85,7 +85,7 @@ public abstract class ActivityDomReader {
 		for (int i = 0; i < rules.getLength(); i++) {
 			entry.addAclRule(aclDomReader.readRule((Element) rules.item(i)));
 		}
-		
+
 		// Get the reply-to
 		NodeList replies = element.getElementsByTagNameNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT);
 		for(int i=0; i < replies.getLength(); i++) {
@@ -93,47 +93,48 @@ public abstract class ActivityDomReader {
 			if (replyTo.getHref()!=null){
 				entry.setParentId(readParentId(replyTo.getHref()));
 				entry.setParentJID(readParentJID(replyTo.getHref()));
-			}				
+			}
 			entry.addRecipient(replyTo);
 		}
-		
+
 		//Get the links...
 		NodeList links = element.getElementsByTagNameNS(Atom.NAMESPACE, Atom.LINK_ELEMENT);
 		for(int i=0; i < links.getLength(); i++) {
 			AtomLink link= atomDomReader.readLink(((Element) links.item(i)));
-			entry.addLink(link);		
+			entry.addLink(link);
 		}
-		
-		
+
+
 		return entry;
 	}
-	
-	public String readParentJID(String href) 
-    { 
-            if (href.length()==0) 
-                    return null; 
-            int i=href.indexOf("?"); 
-            if(i == -1) { 
-                    return null; 
-            } 
-            return href.substring(5, i); 
-    } 
 
-	
-	public String readParentId(String href) 
-    { 
-            if (href.length()==0) 
-                    return null; 
-            int i=href.indexOf("item="); 
-            if(i == -1) { 
-                    return null; 
-            } 
-            return href.substring(5+i, href.length()); 
-    } 
-	
+	public String readParentJID(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("?");
+		if(i == -1) {
+			return null;
+		}
+		return href.substring(5, i);
+
+	}
+
+	public String readParentId(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("item=");
+		if(i == -1) {
+			return null;
+		}
+		return href.substring(5+i, href.length());
+
+	}
+
 	public String readActivityId(Element element) {
 		return DomHelper.getElementAttribute(element, "id");
-		
+
 	}
 
 	protected ActivityActor readActor(Element element) {
