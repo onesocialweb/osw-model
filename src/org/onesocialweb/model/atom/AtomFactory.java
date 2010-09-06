@@ -58,6 +58,15 @@ public abstract class AtomFactory {
 		return link;
 	}
 	
+	public AtomLink link(String href, String rel, String title, String type) {
+		AtomLink link = link();
+		link.setHref(href);
+		link.setRel(rel);
+		link.setTitle(title);
+		link.setType(type);
+		return link;
+	}
+	
 	public AtomReplyTo reply( String ref, String href, String type, String source) {
 		AtomReplyTo reply = reply();
 		reply.setRef(ref);
