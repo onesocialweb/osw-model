@@ -108,6 +108,19 @@ public abstract class AtomDomWriter {
 				write(recipient, e);
 			}
 		}
+		
+		if ((entry.getParentId()!=null) && (entry.getParentJID()!=null)){
+			
+			Element e1 = (Element) target.appendChild(target.getOwnerDocument().createElementNS(Atom.NAMESPACE, Atom.LINK_ELEMENT));
+			e1.setAttribute(Atom.REL_ATTRIBUTE, "alternate");
+			e1.setAttribute(Atom.TYPE_ATTRIBUTE, "text/html");
+			e1.setAttribute(Atom.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());
+			
+			Element e2 = (Element) target.appendChild(target.getOwnerDocument().createElementNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT));
+			e2.setAttribute(AtomThreading.REF_ATTRIBUTE, entry.getParentId());
+			e2.setAttribute(AtomThreading.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());
+			
+		}
 	}
 	
 	/* (non-Javadoc)
