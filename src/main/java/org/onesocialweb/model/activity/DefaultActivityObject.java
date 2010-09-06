@@ -31,6 +31,17 @@ public class DefaultActivityObject extends DefaultAtomEntry implements ActivityO
 	public void setType(String type) {
 		this.type = type;
 	}
+
+	@Override
+	public int hashCode() {
+		return type.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (! (other instanceof DefaultActivityObject)) return false;
+		else return ((DefaultActivityObject)other).getType().equals(getType());
+	}
 	
 	@Override
 	public String toString() {
