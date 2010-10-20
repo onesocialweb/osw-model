@@ -157,5 +157,10 @@ public class DefaultAtomLink extends DefaultAtomCommon implements AtomLink {
 	public boolean hasType() {
 		return type != null;
 	}
+	
+	@Override
+	public boolean hasCount() {
+		return count != 0;
+	}
 
 }

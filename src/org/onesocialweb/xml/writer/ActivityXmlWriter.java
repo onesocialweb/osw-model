@@ -150,6 +150,7 @@ public class ActivityXmlWriter extends XmlWriter {
 				if (link.hasRel()) attribute(Atom.REL_ATTRIBUTE, link.getRel());
 				if (link.hasTitle()) attribute(Atom.TITLE_ATTRIBUTE, link.getTitle());
 				if (link.hasType()) attribute(Atom.TYPE_ATTRIBUTE, link.getType());
+				if (link.hasCount()) attribute(AtomThreading.COUNT, ""+link.getCount());
 				endClosed();
 			}
 		}

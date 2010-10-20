@@ -94,6 +94,15 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 				}
 			}
 		}
+		
+		if (entry.hasRecipients()){
+			for (AtomReplyTo replyto: entry.getRecipients()){
+				if ((replyto.getRef()!=null) && (replyto.getHref().contains("?;node=urn:"))){
+					entry.setParentId(readParentId(replyto.getHref()));										
+					entry.setParentJID(readParentJID(replyto.getHref()));
+				}					
+			}
+		}
 		return entry;
 	}
 	
@@ -282,6 +291,30 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 			}
 		}
 		return object;
+	}
+	
+	public String readParentJID(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("?");
+		if(i == -1) {
+			return null;
+		}
+		return href.substring(5, i);
+
+	}
+
+	public String readParentId(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("item=");
+		if(i == -1) {
+			return null;
+		}
+		return href.substring(5+i, href.length());
+
 	}
 
 	abstract protected ActivityFactory getActivityFactory();

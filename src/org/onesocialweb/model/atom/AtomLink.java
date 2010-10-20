@@ -57,5 +57,7 @@ public interface AtomLink extends AtomCommon {
 	public boolean hasTitle();
 	
 	public boolean hasType();
+	
+	public boolean hasCount();
 
 }

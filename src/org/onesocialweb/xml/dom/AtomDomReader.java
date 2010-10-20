@@ -118,8 +118,14 @@ public abstract class AtomDomReader {
 		try {
 			link.setCount(Integer.parseInt(DomHelper.getElementAttribute(element, "thr:count")));
 		} catch(NumberFormatException e) {
-			link.setCount(0);
-		}
+			try{ 
+				link.setCount(Integer.parseInt(DomHelper.getElementAttribute(element, "count")));
+			}
+			catch(NumberFormatException ne) {
+				link.setCount(0);
+			}
+			} 
+					
 		return link;
 	}
 
