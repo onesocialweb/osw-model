@@ -42,7 +42,6 @@ public class RelationDomReaderTest {
 	public void testLoadXml() throws DocumentException {
 		Relation relation = readEntry("relation.xml");
 		assertNotNull(relation);
-		System.out.println(relation);
 	}
 	
 	protected Relation readEntry(String path) throws DocumentException {

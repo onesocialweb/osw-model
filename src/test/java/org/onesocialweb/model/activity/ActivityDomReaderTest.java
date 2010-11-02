@@ -41,7 +41,6 @@ public class ActivityDomReaderTest {
 	public void testLoadXml() throws DocumentException {
 		ActivityEntry entry = readEntry("activity-entry.xml");
 		assertNotNull(entry);
-		System.out.println(entry);
 	}
 	
 	protected ActivityEntry readEntry(String path) throws DocumentException {

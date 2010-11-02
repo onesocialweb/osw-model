@@ -48,6 +48,5 @@ public class AclDomWriterTest {
 		
         OutputFormat format = OutputFormat.createPrettyPrint();
         XMLWriter xmlWriter = new XMLWriter( System.out, format );
-        xmlWriter.write(reader.read(document));
 	}
 }

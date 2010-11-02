@@ -50,7 +50,6 @@ public class XppActivityReaderTest {
 		}
 		
 		assertNotNull(entry);
-		System.out.println("Entry:" + entry);
 	}
 	
 	private class CustomXppActivityReader extends DefaultXppActivityReader {

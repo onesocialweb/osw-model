@@ -48,7 +48,6 @@ public class XppRelationReaderTest {
 		}
 		
 		assertNotNull(relation);
-		System.out.println("Relation: " + relation);
 	}
 	
 }

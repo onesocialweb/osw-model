@@ -50,7 +50,6 @@ public class XppVCard4ReaderTest {
 		assertNotNull(profile);
 		
 		profile.setUserId("alice@wonderland.it");
-		System.out.println("Profile:" + profile);
 	}
 
 }

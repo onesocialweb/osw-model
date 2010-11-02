@@ -41,7 +41,6 @@ public class AtomDomReaderTest {
 	public void testLink() throws DocumentException {
 		AtomEntry entry = readEntry("atom-link.xml");
 		assertNotNull(entry);
-		System.out.println(entry);
 	}
 	
 	protected AtomEntry readEntry(String path) throws DocumentException {
