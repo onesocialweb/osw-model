@@ -111,13 +111,28 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 		readAtomPersonElement(actor, parser);
 		return actor;
 	}
-	
+
+	/**
+	 * @param parser
+	 * @return A new AtomPerson
+	 * @throws XmlPullParserException
+	 * @throws IOException
+	 */
 	protected AtomPerson parsePerson(XmlPullParser parser) throws XmlPullParserException, IOException {	
 		final AtomPerson person = atomFactory.person();
 		readAtomPersonElement(person, parser);
 		return person;
 	}
 	
+	/**
+	 * Populates the passed AtomPerson with information from the provided
+	 * parser.
+	 *
+	 * @param person
+	 * @param parser
+	 * @throws XmlPullParserException
+	 * @throws IOException
+	 */
 	protected void readAtomPersonElement(AtomPerson person, XmlPullParser parser) throws XmlPullParserException, IOException {
 		final String tagName = parser.getName();
 		final String tagNamespace = parser.getNamespace();

@@ -41,7 +41,7 @@ public abstract class Field {
 	public abstract String getValue();
 	
 	/**
-	 * @return 
+	 * @return is the field valid?
 	 */
 	public abstract boolean isValid();
 	
