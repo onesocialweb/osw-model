@@ -14,7 +14,7 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.relation;
+package org.onesocialweb.xml.dom;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -32,6 +32,9 @@ import org.onesocialweb.model.acl.AclFactory;
 import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.acl.AclSubject;
 import org.onesocialweb.model.acl.DefaultAclFactory;
+import org.onesocialweb.model.relation.DefaultRelationFactory;
+import org.onesocialweb.model.relation.Relation;
+import org.onesocialweb.model.relation.RelationFactory;
 import org.onesocialweb.xml.dom.RelationDomWriter;
 import org.onesocialweb.xml.dom.imp.DefaultRelationDomWriter;
 import org.w3c.dom.Element;

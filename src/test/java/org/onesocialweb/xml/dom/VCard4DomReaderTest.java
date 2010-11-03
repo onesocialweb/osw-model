@@ -14,7 +14,7 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.vcard4;
+package org.onesocialweb.xml.dom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,6 +25,7 @@ import org.dom4j.io.DOMWriter;
 import org.dom4j.io.SAXReader;
 import org.junit.Before;
 import org.junit.Test;
+import org.onesocialweb.model.vcard4.Profile;
 import org.onesocialweb.xml.dom.VCard4DomReader;
 import org.onesocialweb.xml.dom.imp.DefaultVCard4DomReader;
 import org.onesocialweb.xml.namespace.VCard4;

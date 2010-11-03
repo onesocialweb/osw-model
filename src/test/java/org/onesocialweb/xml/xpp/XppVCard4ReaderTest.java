@@ -14,13 +14,14 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.vcard4;
+package org.onesocialweb.xml.xpp;
 
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
 import org.junit.Test;
+import org.onesocialweb.model.vcard4.Profile;
 import org.onesocialweb.xml.xpp.imp.DefaultXppVCard4Reader;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

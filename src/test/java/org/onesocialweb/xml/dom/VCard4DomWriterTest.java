@@ -14,7 +14,7 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.vcard4;
+package org.onesocialweb.xml.dom;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -33,6 +33,12 @@ import org.onesocialweb.model.acl.AclFactory;
 import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.acl.AclSubject;
 import org.onesocialweb.model.acl.DefaultAclFactory;
+import org.onesocialweb.model.vcard4.DefaultVCard4Factory;
+import org.onesocialweb.model.vcard4.GenderField;
+import org.onesocialweb.model.vcard4.Field;
+import org.onesocialweb.model.vcard4.Profile;
+import org.onesocialweb.model.vcard4.TelField;
+import org.onesocialweb.model.vcard4.VCard4Factory;
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
 import org.onesocialweb.xml.dom.VCard4DomWriter;

@@ -14,50 +14,48 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.atom;
+package org.onesocialweb.xml.dom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
-import org.dom4j.io.DOMWriter;
 import org.dom4j.io.SAXReader;
 import org.junit.Before;
 import org.junit.Test;
-import org.onesocialweb.xml.dom.imp.DefaultAtomDomReader;
-import org.w3c.dom.Element;
+import org.onesocialweb.model.activity.ActivityEntry;
+import org.onesocialweb.xml.dom.ActivityDomReader;
+import org.onesocialweb.xml.dom.imp.DefaultActivityDomReader;
+import org.onesocialweb.xml.dom4j.ElementAdapter;
 
-public class AtomDomReaderTest {
+public class ActivityDomReaderTest {
 
-	private DefaultAtomDomReader atomDomReader;
+	private ActivityDomReader activityDomReader;
 
 	@Before
 	public void setUp() throws Exception {
-		atomDomReader = new DefaultAtomDomReader();
+		activityDomReader = new DefaultActivityDomReader();
 	}
 	
 	@Test
-	public void testLink() throws DocumentException {
-		AtomEntry entry = readEntry("atom-link.xml");
+	public void testLoadXml() throws DocumentException {
+		ActivityEntry entry = readEntry("activity-entry.xml");
 		assertNotNull(entry);
 	}
 	
-	protected AtomEntry readEntry(String path) throws DocumentException {
-		org.w3c.dom.Document document = readDocument(path);
-        Element root = (Element) document.getFirstChild();
+	protected ActivityEntry readEntry(String path) throws DocumentException {
+		org.w3c.dom.Element root = readDocument(path);
         
-        assertEquals(root.getNodeName(), "entry");
-        assertEquals(root.getNamespaceURI(), "http://www.w3.org/2005/Atom");
+        assertEquals("entry", root.getNodeName());
+        assertEquals("http://www.w3.org/2005/Atom", root.getNamespaceURI());
         
-        return atomDomReader.readEntry(root);
+        return activityDomReader.readEntry(root);
 	}
 	
-	protected org.w3c.dom.Document readDocument(String path) throws DocumentException {
+	protected org.w3c.dom.Element readDocument(String path) throws DocumentException {
         SAXReader reader = new SAXReader();
         Document document = reader.read(getClass().getClassLoader().getResourceAsStream(path));
-        DOMWriter writer = new DOMWriter();
-        return writer.write(document);		
+        return new ElementAdapter(document.getRootElement());
 	}
-
 }

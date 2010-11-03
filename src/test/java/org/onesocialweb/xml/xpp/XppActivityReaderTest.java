@@ -14,13 +14,16 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.activity;
+package org.onesocialweb.xml.xpp;
 
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
 import org.junit.Test;
+import org.onesocialweb.model.activity.ActivityEntry;
+import org.onesocialweb.model.activity.ActivityFactory;
+import org.onesocialweb.model.activity.DefaultActivityFactory;
 import org.onesocialweb.model.atom.AtomFactory;
 import org.onesocialweb.model.atom.DefaultAtomFactory;
 import org.onesocialweb.xml.xpp.imp.DefaultXppActivityReader;

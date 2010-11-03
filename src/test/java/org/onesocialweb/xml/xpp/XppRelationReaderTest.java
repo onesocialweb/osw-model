@@ -14,13 +14,14 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.relation;
+package org.onesocialweb.xml.xpp;
 
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
 
 import org.junit.Test;
+import org.onesocialweb.model.relation.Relation;
 import org.onesocialweb.xml.xpp.imp.DefaultXppRelationReader;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;

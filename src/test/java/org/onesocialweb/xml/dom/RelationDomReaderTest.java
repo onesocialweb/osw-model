@@ -14,7 +14,7 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.relation;
+package org.onesocialweb.xml.dom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,6 +24,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.junit.Before;
 import org.junit.Test;
+import org.onesocialweb.model.relation.Relation;
 import org.onesocialweb.xml.dom.RelationDomReader;
 import org.onesocialweb.xml.dom.imp.DefaultRelationDomReader;
 import org.onesocialweb.xml.dom4j.ElementAdapter;

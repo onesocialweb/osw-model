@@ -14,12 +14,10 @@
  *  limitations under the License.
  *    
  */
-package org.onesocialweb.model.acl;
+package org.onesocialweb.xml.dom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -27,55 +25,33 @@ import org.dom4j.io.DOMWriter;
 import org.dom4j.io.SAXReader;
 import org.junit.Before;
 import org.junit.Test;
-import org.onesocialweb.xml.dom.AclDomReader;
-import org.onesocialweb.xml.dom.imp.DefaultAclDomReader;
+import org.onesocialweb.model.atom.AtomEntry;
+import org.onesocialweb.xml.dom.imp.DefaultAtomDomReader;
 import org.w3c.dom.Element;
 
-public class AclDomReaderTest {
+public class AtomDomReaderTest {
 
-	private AclDomReader aclDomReader;
-	
+	private DefaultAtomDomReader atomDomReader;
+
 	@Before
 	public void setUp() throws Exception {
-		aclDomReader = new DefaultAclDomReader() {
-
-			@Override
-			protected AclFactory getAclFactory() {
-				return new DefaultAclFactory();
-			}
-			
-		};
+		atomDomReader = new DefaultAtomDomReader();
 	}
 	
 	@Test
-	public void testLoadXml() throws DocumentException {
-		AclRule rule = readRule("acl-rule.xml");
-		assertNotNull(rule);
-		
-		List<AclAction> actions = rule.getActions();
-		assertNotNull(actions);
-		assertEquals(1, actions.size());
-		
-		AclAction action = actions.get(0);
-		assertEquals(AclAction.PERMISSION_GRANT, action.getPermission());
-		assertEquals(AclAction.ACTION_VIEW, action.getName());
-		
-		List<AclSubject> subjects = rule.getSubjects();
-		assertNotNull(subjects);
-		assertEquals(1, subjects.size());
-		
-		AclSubject subject = subjects.get(0);
-		assertEquals(AclSubject.EVERYONE, subject.getType());
+	public void testLink() throws DocumentException {
+		AtomEntry entry = readEntry("atom-link.xml");
+		assertNotNull(entry);
 	}
-
-	protected AclRule readRule(String path) throws DocumentException {
+	
+	protected AtomEntry readEntry(String path) throws DocumentException {
 		org.w3c.dom.Document document = readDocument(path);
         Element root = (Element) document.getFirstChild();
         
-        assertEquals(root.getNodeName(), "acl-rule");
-        assertEquals(root.getNamespaceURI(), "http://onesocialweb.org/spec/1.0/");
+        assertEquals(root.getNodeName(), "entry");
+        assertEquals(root.getNamespaceURI(), "http://www.w3.org/2005/Atom");
         
-        return aclDomReader.readRule(root);
+        return atomDomReader.readEntry(root);
 	}
 	
 	protected org.w3c.dom.Document readDocument(String path) throws DocumentException {
