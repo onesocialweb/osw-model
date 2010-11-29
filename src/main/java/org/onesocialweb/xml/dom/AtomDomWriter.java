@@ -152,8 +152,10 @@ public abstract class AtomDomWriter {
 		if (link.hasRel()) target.setAttribute(Atom.REL_ATTRIBUTE, link.getRel());
 		if (link.hasTitle()) target.setAttribute(Atom.TITLE_ATTRIBUTE, link.getTitle());
 		if (link.hasType()) target.setAttribute(Atom.TYPE_ATTRIBUTE, link.getType());	
-		if (replies>0)			
-			target.setAttributeNS(AtomThreading.NAMESPACE, AtomThreading.COUNT, ""+replies);
+		if (replies>0){			
+			target.setAttribute("xmlns:thr", AtomThreading.NAMESPACE);
+			target.setAttribute(AtomThreading.COUNT, ""+replies);
+		}
 	}
 		
 	/* (non-Javadoc)
