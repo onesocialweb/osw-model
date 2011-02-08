@@ -133,7 +133,9 @@ public abstract class ActivityDomReader {
 	}
 
 	public String readActivityId(Element element) {
-		return DomHelper.getElementAttribute(element, "id");
+		String node= DomHelper.getElementAttribute(element, "node");
+		return readParentId(node);
+
 
 	}
 
