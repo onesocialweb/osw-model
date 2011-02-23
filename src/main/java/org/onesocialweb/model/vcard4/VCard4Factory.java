@@ -23,6 +23,8 @@ public abstract class VCard4Factory {
 	
 	public abstract Profile profile();
 	
+	public abstract NicknameField nickname();
+	
 	public abstract FullNameField fullname();
 	
 	public abstract GenderField gender();

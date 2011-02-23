@@ -35,6 +35,8 @@ public class VCard4 {
 	
 	public static final String VCARDS_ELEMENT = "vcards";
 	
+	public static final String NICKNAME_ELEMENT = "nickname";
+	
 	public static final String BDAY_ELEMENT = "bday";
 	
 	public static final String FN_ELEMENT 	= "fn";

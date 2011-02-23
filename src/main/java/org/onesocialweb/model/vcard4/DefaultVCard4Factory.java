@@ -17,6 +17,7 @@
 
 package org.onesocialweb.model.vcard4;
 
+
 public class DefaultVCard4Factory extends VCard4Factory {
 
 	@Override
@@ -71,6 +72,12 @@ public class DefaultVCard4Factory extends VCard4Factory {
 	
 	public URLField url(){
 		return new DefaultURLField();
+	}
+
+	@Override
+	public NicknameField nickname() {
+		
+		return new DefaultNicknameField();
 	}
 
 }

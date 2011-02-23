@@ -24,7 +24,7 @@ import java.util.TimeZone;
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
 
-public abstract class Profile {
+public abstract class Profile  {
 	
 	public abstract String getUserId();
 

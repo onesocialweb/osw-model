@@ -1,40 +1,29 @@
 package org.onesocialweb.model.vcard4;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.onesocialweb.model.acl.AclRule;
 
-@SuppressWarnings("serial")
-public class DefaultTelField extends TelField
-{
+public class DefaultNicknameField extends NicknameField implements Serializable{
 
-	private TelField.Type type = TelField.Type.VOICE;
-	
-	private String tel;
-	
 	private List<AclRule> rules = new ArrayList<AclRule>();
 	
-	
+	private String nickname;
+
 	@Override
-	public String getNumber() {
-		if (tel.contains("tel:"))
-			return tel.substring(4);
-		return tel;
+	public String getNickname() {		
+		return nickname;
 	}
 
 	@Override
-	public void setNumber(String tel, Type type) {
-		this.tel = tel;
-		this.type=type;
+	public void setNickname(String nickname) {
+		this.nickname=nickname;
+		
 	}
-	
-	public Type getType()
-	{
-		return this.type;
-	}
-	
+
 	@Override
 	public void addAclRule(AclRule rule) {
 		rules.add(rule);

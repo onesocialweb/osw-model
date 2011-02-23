@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class DefaultProfile extends Profile {
 
 	private List<Field> fields = new ArrayList<Field>();
