@@ -45,6 +45,8 @@ public abstract class VCard4Factory {
 	
 	public abstract URLField url();
 	
+	public abstract SourceField source();
+	
 	public FullNameField fullname(String name) {
 		final FullNameField field = fullname();
 		field.setFullName(name);
@@ -113,6 +115,18 @@ public abstract class VCard4Factory {
 		field.setGiven(given);
 		field.setSurname(surname);
 		field.setSuffix(suffix);
+		return field;
+	}
+	
+	public NicknameField nickname(String nickname) {
+		final NicknameField field = nickname();
+		field.setNickname(nickname);
+		return field;
+	}
+	
+	public SourceField source(String source) {
+		final SourceField field = source();
+		field.setSource(source);
 		return field;
 	}
 

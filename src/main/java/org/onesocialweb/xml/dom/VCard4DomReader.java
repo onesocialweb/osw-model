@@ -25,9 +25,11 @@ import org.onesocialweb.model.vcard4.EmailField;
 import org.onesocialweb.model.vcard4.FullNameField;
 import org.onesocialweb.model.vcard4.GenderField;
 import org.onesocialweb.model.vcard4.NameField;
+import org.onesocialweb.model.vcard4.NicknameField;
 import org.onesocialweb.model.vcard4.NoteField;
 import org.onesocialweb.model.vcard4.PhotoField;
 import org.onesocialweb.model.vcard4.Profile;
+import org.onesocialweb.model.vcard4.SourceField;
 import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.TimeZoneField;
 import org.onesocialweb.model.vcard4.URLField;
@@ -88,6 +90,10 @@ public abstract class VCard4DomReader
 						profile.addField(readTimeZone(e));				
 					}else if (name.equals(VCard4.URL_ELEMENT)) {
 						profile.addField(readURL(e));				
+					}else if (name.equals(VCard4.SOURCE_ELEMENT)) {
+						profile.addField(readSource(e));				
+					}else if (name.equals(VCard4.NICKNAME_ELEMENT)) {
+						profile.addField(readNickname(e));				
 					}
 				} catch (CardinalityException ex) {
 					
@@ -180,6 +186,22 @@ public abstract class VCard4DomReader
 	protected NoteField readNote(Element element) {
 		NoteField field=factory.note();		
 		field.setNote(DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4));
+		
+		field.setAclRules(readRules(element));		
+		return field;
+	}
+	
+	protected SourceField readSource(Element element) {
+		SourceField field=factory.source();		
+		field.setSource(DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4));
+		
+		field.setAclRules(readRules(element));		
+		return field;
+	}
+	
+	protected NicknameField readNickname(Element element) {
+		NicknameField field=factory.nickname();		
+		field.setNickname(DomHelper.getElementText(element, VCard4.TEXT_ELEMENT,NS_VCARD4));
 		
 		field.setAclRules(readRules(element));		
 		return field;

@@ -19,6 +19,7 @@ package org.onesocialweb.model.vcard4;
 
 import java.util.Date;
 
+@SuppressWarnings("serial")
 public abstract class BirthdayField extends Field {
 
 	public enum Type {Date, DateTime, Time};

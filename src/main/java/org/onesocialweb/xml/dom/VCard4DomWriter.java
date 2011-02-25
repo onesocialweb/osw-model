@@ -27,9 +27,11 @@ import org.onesocialweb.model.vcard4.Field;
 import org.onesocialweb.model.vcard4.FullNameField;
 import org.onesocialweb.model.vcard4.GenderField;
 import org.onesocialweb.model.vcard4.NameField;
+import org.onesocialweb.model.vcard4.NicknameField;
 import org.onesocialweb.model.vcard4.NoteField;
 import org.onesocialweb.model.vcard4.PhotoField;
 import org.onesocialweb.model.vcard4.Profile;
+import org.onesocialweb.model.vcard4.SourceField;
 import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.TimeZoneField;
 import org.onesocialweb.model.vcard4.URLField;
@@ -86,7 +88,11 @@ public abstract class VCard4DomWriter
 					write(((TimeZoneField) field), e);
 			} else if (field instanceof URLField) {
 					write(((URLField) field), e);
-			}													 
+			} else if (field instanceof SourceField){
+					write(((SourceField)field), e);
+			}  else if (field instanceof NicknameField){
+					write(((NicknameField)field), e);
+			}
 
 			if (field.hasAclRules()) {
 				for (AclRule aclRule : field.getAclRules()) {
@@ -202,6 +208,14 @@ public abstract class VCard4DomWriter
 	public void write(PhotoField photo, Element target) {
 
 		appendTextNode(target, NS_VCARD4, "uri", photo.getUri());
+	}
+	
+	public void write(SourceField source, Element target){
+		appendTextNode(target, NS_VCARD4, "uri", source.getSource());
+	}
+	
+	public void write(NicknameField nickname, Element target){
+		appendTextNode(target, NS_VCARD4, "text", nickname.getNickname());
 	}
 
 

@@ -10,10 +10,11 @@
   <!--  Additional settings -->
   <source path="xml/" >
   	<exclude name="**/*Test.java" />
-  	<exclude name="dom/imp/**"/>
+  	<exclude name="dom/imp/**"/>  	
   	<exclude name="dom4j/**" />
   	<exclude name="xpp/**" />
   	<exclude name="writer/**"/>
   </source>
+	
     	
 </module>

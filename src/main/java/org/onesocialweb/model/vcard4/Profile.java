@@ -132,6 +132,20 @@ public abstract class Profile  {
 		else return null;
 	}
 	
+	public String getNickname(){
+		if (hasField(NicknameField.NAME)){		
+			return ((NicknameField) getField(NicknameField.NAME)).getNickname();
+		}
+		else return null;
+	}
+	
+	public String getSource(){
+		if (hasField(SourceField.NAME)){		
+			return ((SourceField) getField(SourceField.NAME)).getSource();
+		}
+		else return null;
+	}
+	
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("Profile (" + getUserId() + "): \n");

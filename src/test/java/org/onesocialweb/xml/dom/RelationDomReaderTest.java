@@ -25,7 +25,6 @@ import org.dom4j.io.SAXReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.onesocialweb.model.relation.Relation;
-import org.onesocialweb.xml.dom.RelationDomReader;
 import org.onesocialweb.xml.dom.imp.DefaultRelationDomReader;
 import org.onesocialweb.xml.dom4j.ElementAdapter;
 import org.onesocialweb.xml.namespace.Onesocialweb;

@@ -25,9 +25,11 @@ import org.onesocialweb.model.vcard4.Field;
 import org.onesocialweb.model.vcard4.FullNameField;
 import org.onesocialweb.model.vcard4.GenderField;
 import org.onesocialweb.model.vcard4.NameField;
+import org.onesocialweb.model.vcard4.NicknameField;
 import org.onesocialweb.model.vcard4.NoteField;
 import org.onesocialweb.model.vcard4.PhotoField;
 import org.onesocialweb.model.vcard4.Profile;
+import org.onesocialweb.model.vcard4.SourceField;
 import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.TimeZoneField;
 import org.onesocialweb.model.vcard4.URLField;
@@ -75,6 +77,10 @@ public class VCard4XmlWriter extends XmlWriter {
 				dump((TimeZoneField) field);
 			} else if (field instanceof URLField) {
 				dump((URLField) field);
+			} else if (field instanceof SourceField) {
+				dump((SourceField) field);
+			} else if (field instanceof NicknameField) {
+				dump((NicknameField) field);
 			} 
 		}
 		// Close
@@ -122,6 +128,20 @@ public class VCard4XmlWriter extends XmlWriter {
 		text(VCard4.TEXT_ELEMENT, field.getNote());		
 		dumpAclRules(field);
 		closeTag(VCard4.NOTE_ELEMENT);
+	}
+	
+	private void dump(SourceField field) {
+		openTag(VCard4.SOURCE_ELEMENT);
+		text(VCard4.TEXT_ELEMENT, field.getSource());		
+		dumpAclRules(field);
+		closeTag(VCard4.SOURCE_ELEMENT);
+	}
+	
+	private void dump(NicknameField field) {
+		openTag(VCard4.NICKNAME_ELEMENT);
+		text(VCard4.TEXT_ELEMENT, field.getNickname());		
+		dumpAclRules(field);
+		closeTag(VCard4.NICKNAME_ELEMENT);
 	}
 	
 	private void dump(PhotoField field) {

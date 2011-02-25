@@ -34,14 +34,13 @@ import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.acl.AclSubject;
 import org.onesocialweb.model.acl.DefaultAclFactory;
 import org.onesocialweb.model.vcard4.DefaultVCard4Factory;
-import org.onesocialweb.model.vcard4.GenderField;
 import org.onesocialweb.model.vcard4.Field;
+import org.onesocialweb.model.vcard4.GenderField;
 import org.onesocialweb.model.vcard4.Profile;
 import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.VCard4Factory;
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
-import org.onesocialweb.xml.dom.VCard4DomWriter;
 import org.onesocialweb.xml.dom.imp.DefaultVCard4DomWriter;
 import org.w3c.dom.Element;
 

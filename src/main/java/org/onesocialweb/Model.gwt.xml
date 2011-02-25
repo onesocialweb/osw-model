@@ -13,7 +13,8 @@
   	<exclude name="**/*Test.java" />
   	<exclude name="vcard4/DefaultBirthdayField.java"/>
   	<exclude name="vcard4/DefaultVCard4Factory.java"/>
-  	<exclude name="atom/DefaultAtomHelper.java"/> 	  	  	
+  	<exclude name="atom/DefaultAtomHelper.java"/> 
+  	<exclude name="xml/hcard/**"/>  	  	  	
   </source>
     	
 </module>

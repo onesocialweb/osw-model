@@ -24,9 +24,11 @@ import org.onesocialweb.model.vcard4.EmailField;
 import org.onesocialweb.model.vcard4.FullNameField;
 import org.onesocialweb.model.vcard4.GenderField;
 import org.onesocialweb.model.vcard4.NameField;
+import org.onesocialweb.model.vcard4.NicknameField;
 import org.onesocialweb.model.vcard4.NoteField;
 import org.onesocialweb.model.vcard4.PhotoField;
 import org.onesocialweb.model.vcard4.Profile;
+import org.onesocialweb.model.vcard4.SourceField;
 import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.TimeZoneField;
 import org.onesocialweb.model.vcard4.URLField;
@@ -92,7 +94,12 @@ public abstract class XppVCard4Reader implements XppReader<Profile> {
 							profile.addField(parseUrl(parser));
 						}  else if (name.equals(VCard4.TZ_ELEMENT)) {
 						profile.addField(parseTimeZone(parser));
-					} 
+						}  else if (name.equals(VCard4.SOURCE_ELEMENT)) {
+							profile.addField(parseSource(parser));
+						} else if (name.equals(VCard4.NICKNAME_ELEMENT)) {
+							profile.addField(parseNickname(parser));
+						}
+						
 					}catch (CardinalityException ex) {
 
 					} catch (UnsupportedFieldException ex) {
@@ -232,6 +239,62 @@ public abstract class XppVCard4Reader implements XppReader<Profile> {
 			} else if (eventType == XmlPullParser.END_TAG) {
 				if (namespace.equals(VCard4.NAMESPACE)
 						&& name.equals(VCard4.NOTE_ELEMENT)) {
+					done = true;
+				}
+			}
+		}
+		return field;
+	}
+	
+	protected SourceField parseSource(XmlPullParser parser) throws XmlPullParserException, IOException {	
+		final SourceField field = profileFactory.source();
+		boolean done = false;
+		
+		while (!done) {
+			int eventType = parser.next();
+			String name = parser.getName();
+			String namespace = parser.getNamespace();
+			if (eventType == XmlPullParser.START_TAG) {
+				if (namespace.equals(VCard4.NAMESPACE)) {
+					if (name.equals(VCard4.URI_ELEMENT)) {
+						field.setSource(parser.nextText().trim());
+					} 
+				} else if (namespace.equals(Onesocialweb.NAMESPACE)) {
+					if (name.equals(Onesocialweb.ACL_RULE_ELEMENT)) {
+						field.addAclRule(aclReader.parse(parser));
+					}
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (namespace.equals(VCard4.NAMESPACE)
+						&& name.equals(VCard4.SOURCE_ELEMENT)) {
+					done = true;
+				}
+			}
+		}
+		return field;
+	}
+	
+	protected NicknameField parseNickname(XmlPullParser parser) throws XmlPullParserException, IOException {	
+		final NicknameField field = profileFactory.nickname();
+		boolean done = false;
+		
+		while (!done) {
+			int eventType = parser.next();
+			String name = parser.getName();
+			String namespace = parser.getNamespace();
+			if (eventType == XmlPullParser.START_TAG) {
+				if (namespace.equals(VCard4.NAMESPACE)) {
+					if (name.equals(VCard4.TEXT_ELEMENT)) {
+						field.setNickname(parser.nextText().trim());
+					} 
+				} else if (namespace.equals(Onesocialweb.NAMESPACE)) {
+					if (name.equals(Onesocialweb.ACL_RULE_ELEMENT)) {
+						field.addAclRule(aclReader.parse(parser));
+					}
+				}
+			} else if (eventType == XmlPullParser.END_TAG) {
+				if (namespace.equals(VCard4.NAMESPACE)
+						&& name.equals(VCard4.NICKNAME_ELEMENT)) {
 					done = true;
 				}
 			}

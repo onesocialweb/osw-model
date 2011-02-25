@@ -25,6 +25,7 @@ import java.util.List;
 import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.atom.DefaultAtomHelper;
 
+@SuppressWarnings("serial")
 public class DefaultBirthdayField extends BirthdayField {
 
 	private List<AclRule> rules = new ArrayList<AclRule>();

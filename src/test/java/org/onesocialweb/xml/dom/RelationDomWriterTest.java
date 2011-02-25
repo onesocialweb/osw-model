@@ -35,7 +35,6 @@ import org.onesocialweb.model.acl.DefaultAclFactory;
 import org.onesocialweb.model.relation.DefaultRelationFactory;
 import org.onesocialweb.model.relation.Relation;
 import org.onesocialweb.model.relation.RelationFactory;
-import org.onesocialweb.xml.dom.RelationDomWriter;
 import org.onesocialweb.xml.dom.imp.DefaultRelationDomWriter;
 import org.w3c.dom.Element;
 

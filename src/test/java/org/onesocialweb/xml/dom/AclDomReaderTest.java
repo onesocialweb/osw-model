@@ -32,7 +32,6 @@ import org.onesocialweb.model.acl.AclFactory;
 import org.onesocialweb.model.acl.AclRule;
 import org.onesocialweb.model.acl.AclSubject;
 import org.onesocialweb.model.acl.DefaultAclFactory;
-import org.onesocialweb.xml.dom.AclDomReader;
 import org.onesocialweb.xml.dom.imp.DefaultAclDomReader;
 import org.w3c.dom.Element;
 

@@ -43,7 +43,6 @@ import org.onesocialweb.model.atom.AtomFactory;
 import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.DefaultAtomFactory;
 import org.onesocialweb.model.atom.DefaultAtomHelper;
-import org.onesocialweb.xml.dom.ActivityDomWriter;
 import org.onesocialweb.xml.dom.imp.DefaultActivityDomWriter;
 import org.w3c.dom.Element;
 

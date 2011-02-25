@@ -27,9 +27,6 @@ import org.dom4j.io.DOMReader;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 import org.junit.Test;
-import org.onesocialweb.model.activity.ActivityActor;
-import org.onesocialweb.model.activity.ActivityFactory;
-import org.onesocialweb.model.activity.ActivityObject;
 import org.onesocialweb.model.atom.AtomCategory;
 import org.onesocialweb.model.atom.AtomContent;
 import org.onesocialweb.model.atom.AtomEntry;
@@ -38,7 +35,6 @@ import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.AtomPerson;
 import org.onesocialweb.model.atom.DefaultAtomFactory;
 import org.onesocialweb.model.atom.DefaultAtomHelper;
-import org.onesocialweb.xml.dom.AtomDomWriter;
 import org.onesocialweb.xml.dom.imp.DefaultAtomDomWriter;
 import org.w3c.dom.Element;
 

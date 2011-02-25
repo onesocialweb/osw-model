@@ -37,7 +37,6 @@ import org.onesocialweb.model.atom.AtomFactory;
 import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.DefaultAtomFactory;
 import org.onesocialweb.model.atom.DefaultAtomHelper;
-import org.onesocialweb.xml.writer.ActivityXmlWriter;
 
 public class ActivityXmlWriterTest {
 

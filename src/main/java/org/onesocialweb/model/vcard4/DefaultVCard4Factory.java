@@ -70,6 +70,7 @@ public class DefaultVCard4Factory extends VCard4Factory {
 		return new DefaultTimeZoneField();
 	}
 	
+	@Override
 	public URLField url(){
 		return new DefaultURLField();
 	}
@@ -78,6 +79,12 @@ public class DefaultVCard4Factory extends VCard4Factory {
 	public NicknameField nickname() {
 		
 		return new DefaultNicknameField();
+	}
+	
+	@Override
+	public SourceField source() {
+		
+		return new DefaultSourceField();
 	}
 
 }

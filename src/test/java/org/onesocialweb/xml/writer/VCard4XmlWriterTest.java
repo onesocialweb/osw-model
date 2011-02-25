@@ -34,7 +34,6 @@ import org.onesocialweb.model.vcard4.Profile;
 import org.onesocialweb.model.vcard4.VCard4Factory;
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
-import org.onesocialweb.xml.writer.VCard4XmlWriter;
 
 public class VCard4XmlWriterTest {
 

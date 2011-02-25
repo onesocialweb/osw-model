@@ -1,10 +1,9 @@
 package org.onesocialweb.model.vcard4;
 
 @SuppressWarnings("serial")
-public abstract class URLField extends Field
-{
+public abstract class SourceField extends Field {
 
-public static final String NAME = "url";
+	public static final String NAME = "source";
 	
 	@Override
 	public String getName() {
@@ -13,7 +12,7 @@ public static final String NAME = "url";
 	
 	@Override
 	public String getValue() {
-		return getURL();
+		return getSource();
 	}
 	
 	@Override
@@ -21,7 +20,7 @@ public static final String NAME = "url";
 		return true;
 	}
 	
-	public abstract String getURL();
+	public abstract String getSource();
 	
-	public abstract void setURL(String url);
+	public abstract void setSource(String source);
 }

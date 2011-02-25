@@ -25,7 +25,6 @@ import org.dom4j.io.SAXReader;
 import org.junit.Before;
 import org.junit.Test;
 import org.onesocialweb.model.activity.ActivityEntry;
-import org.onesocialweb.xml.dom.ActivityDomReader;
 import org.onesocialweb.xml.dom.imp.DefaultActivityDomReader;
 import org.onesocialweb.xml.dom4j.ElementAdapter;
 
