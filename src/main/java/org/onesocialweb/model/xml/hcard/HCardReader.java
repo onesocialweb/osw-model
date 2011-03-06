@@ -19,10 +19,12 @@ import org.w3c.dom.NodeList;
 public class HCardReader {
 
 	private final VCard4Factory factory;
+	private String baseUrl;
 	
 	
 	public HCardReader(String baseUrl){	
 		this.factory=getProfileFactory();
+		this.baseUrl=baseUrl;
 	}
 	
 	public Profile readProfile(Node node){
@@ -151,7 +153,15 @@ public class HCardReader {
 	
 	private PhotoField readPhoto(Element e){
 		PhotoField field=factory.photo();
-		field.setUri(e.getAttribute("src"));
+		String photoUrl=e.getAttribute("src");
+		if (!photoUrl.startsWith("http")){
+			if (baseUrl.startsWith("http://www.google.com"))
+				baseUrl="http://www.google.com";
+			photoUrl=baseUrl+photoUrl;
+		}
+			
+		field.setUri(photoUrl);
+		
 				
 		return field;
 	}
