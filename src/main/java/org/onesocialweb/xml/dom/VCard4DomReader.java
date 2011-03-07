@@ -359,6 +359,8 @@ public abstract class VCard4DomReader
 		
 		//The above code validates a date or date-time according to the Vcard4 schema.
 		// The code below validates it according to Atom...
+		if (dateOrTime == null)
+			return false;
 		if (dateOrTime.matches("(\\d{4})(?:-(\\d{2}))?(?:-(\\d{2}))?(?:([Tt])?(?:(\\d{2}))?(?::(\\d{2}))?(?::(\\d{2}))?(?:\\.(\\d{3}))?)?([Zz])?(?:([+-])(\\d{2}):(\\d{2}))?"))
 			return true;
 		return false;
