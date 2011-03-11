@@ -20,6 +20,8 @@ public class Onesocialweb {
 
 	public static final String NAMESPACE = "http://onesocialweb.org/spec/1.0/";
 	
+	public static final String SERVICE_NAMESPACE = "http://onesocialweb.org/rel/service/";
+	
 	public static final String ACL_RULE_ELEMENT = "acl-rule";
 	
 	public static final String ACL_ACTION_ELEMENT = "acl-action";
