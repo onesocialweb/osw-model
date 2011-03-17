@@ -1,6 +1,6 @@
 package org.onesocialweb.xml.namespace;
 
-public class Microformats {
+public class OStatus {
 
 	public static final String XRD_NAMESPACE="http://docs.oasis-open.org/ns/xri/xrd-1.0";
 	public static final String XRD_ELEMENT="XRD";
@@ -9,5 +9,6 @@ public class Microformats {
 	public static final String ALIAS_ELEMENT="Alias";
 	public static final String HCARD_NAMESPACE="http://microformats.org/profile/hcard";
 	public static final String WEBFINGER_PROFILE_NAMESPACE="http://webfinger.net/rel/profile-page";
+	public static final String ATOM_UPDATES="http://schemas.google.com/g/2010#updates-from";
 	
 }
