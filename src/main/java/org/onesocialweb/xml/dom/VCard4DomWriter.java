@@ -35,6 +35,7 @@ import org.onesocialweb.model.vcard4.SourceField;
 import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.TimeZoneField;
 import org.onesocialweb.model.vcard4.URLField;
+import org.onesocialweb.model.vcard4.XFeedField;
 import org.onesocialweb.xml.namespace.VCard4;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -92,6 +93,8 @@ public abstract class VCard4DomWriter
 					write(((SourceField)field), e);
 			}  else if (field instanceof NicknameField){
 					write(((NicknameField)field), e);
+			} else if (field instanceof XFeedField){
+					write(((XFeedField)field), e);
 			}
 
 			if (field.hasAclRules()) {
@@ -203,6 +206,11 @@ public abstract class VCard4DomWriter
 	public void write(URLField url, Element target) {
 
 		appendTextNode(target, NS_VCARD4, "uri", url.getURL());
+	}
+	
+	public void write(XFeedField feed, Element target) {
+
+		appendTextNode(target, NS_VCARD4, "uri", feed.getFeed());
 	}
 
 	public void write(PhotoField photo, Element target) {

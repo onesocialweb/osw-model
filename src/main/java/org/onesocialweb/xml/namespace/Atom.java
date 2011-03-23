@@ -68,4 +68,6 @@ public class Atom {
 	
 	public static final String URI_ELEMENT = "uri";
 	
+	public static final String FEED_ELEMENT="feed";
+	
 }

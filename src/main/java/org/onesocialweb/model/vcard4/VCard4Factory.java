@@ -45,6 +45,8 @@ public abstract class VCard4Factory {
 	
 	public abstract URLField url();
 	
+	public abstract XFeedField feed();
+	
 	public abstract SourceField source();
 	
 	public FullNameField fullname(String name) {

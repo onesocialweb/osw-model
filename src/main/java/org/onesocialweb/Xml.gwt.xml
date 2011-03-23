@@ -14,6 +14,7 @@
   	<exclude name="dom4j/**" />
   	<exclude name="xpp/**" />
   	<exclude name="writer/**"/>
+  	<exclude name="dom/XrdWriter.java" />
   </source>
 	
     	

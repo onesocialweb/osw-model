@@ -50,7 +50,7 @@ public class XrdWriter {
 		
 	}
 	
-	public static String getUsername(String jid){
+	private static String getUsername(String jid){
 		int index = jid.indexOf("@");
 		return jid.substring(0, index);
 	}

@@ -1,5 +1,19 @@
 package org.onesocialweb.model.xml.hcard;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import org.onesocialweb.model.vcard4.DefaultVCard4Factory;
 import org.onesocialweb.model.vcard4.Field;
 import org.onesocialweb.model.vcard4.FullNameField;
@@ -29,10 +43,11 @@ public class HCardReader {
 	
 	public Profile readProfile(Node node){
 		Profile profile =factory.profile();
-		
+		String wholeDoc=elementAsString(node);
 		Node body=null;
 		NodeList allNodes=node.getChildNodes();
-		for (int i=0;i<allNodes.getLength();i++){
+		for (int i=0;i<allNodes.getLength();i++){	
+			String str=elementAsString(allNodes.item(i));
 			if (allNodes.item(i).getNodeType() == Node.ELEMENT_NODE){ 
 				if (allNodes.item(i).getNodeName().equals("body"))
 					body=allNodes.item(i);
@@ -40,34 +55,32 @@ public class HCardReader {
 		}
 	
 		Node hcard=findNestedDiv(body);
-		
-	
+			
 		profile=setProfile(hcard);		
 					
 		return profile;	
 	}
 	
 	private Node findNestedDiv(Node start){
+		
 		Node nestedDiv=null;
 		NodeList nodes= start.getChildNodes();
-		
+
 		for (int i=0; i<nodes.getLength() && nestedDiv==null; i++){
-					
-			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE){ 
-			Element div=  (Element) nodes.item(i);
-			
-			 String classValues=div.getAttribute("class");
-			 if ((classValues!=null) && (classValues.contains("vcard")))
+
+			if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE){ 				
+
+				Element div=  (Element) nodes.item(i);
+				String classValues=div.getAttribute("class");			
+
+				if ((classValues!=null) && (classValues.contains("vcard")))
 					nestedDiv=div;			 
-			 else {
-				 NodeList children=div.getChildNodes();
-				 for (int j=0; j<children.getLength() && nestedDiv==null ; j++){
-					 if (children.item(j).getNodeType() == Node.ELEMENT_NODE)
-						 nestedDiv=findNestedDiv((Element)children.item(j));
-				 }
-			 }
-			 
-		}
+				else {
+					nestedDiv=findNestedDiv(div);			
+				}
+
+			}
+
 		}
 
 		return nestedDiv;
@@ -80,14 +93,11 @@ public class HCardReader {
 			for (int i = 0; i < nodes.getLength(); i++) {
 				if (nodes.item(i).getNodeType() == Node.ELEMENT_NODE) {
 					Element entity= (Element)nodes.item(i);
-					Field f=extractFields(entity);
-					if (f!=null){ 
-
+					List<Field> fs=extractFields(entity);
+					for (Field f:fs) 						
 						profile.addField(f);
-
 					}
-				}
-			}
+				}			
 			profile.addField(factory.source("ostatus"));
 		} catch (UnsupportedFieldException e){
 
@@ -97,30 +107,30 @@ public class HCardReader {
 		return profile;
 	}
 	
-	private Field extractFields(Element e){
-		Field f= null;
+	private List<Field> extractFields(Element e){
+		List<Field> fs= new ArrayList<Field>();
 
 		String classAttr=e.getAttribute("class");
 		if (match(classAttr, VCard4.PHOTO_ELEMENT))
-			f=readPhoto(e);
+			fs.add(readPhoto(e));
 		else if (match(classAttr, VCard4.NICKNAME_ELEMENT))
-			f=readNickName(e);
+			fs.add(readNickName(e));
 		else if (match(classAttr, VCard4.FN_ELEMENT))
-			f=readFullName(e);
+			fs.add(readFullName(e));
 		else if (match(classAttr, VCard4.URL_ELEMENT))
-			f=readUrl(e);
+			fs.add(readUrl(e));
 		else if (match(classAttr, VCard4.NOTE_ELEMENT))
-			f=readNote(e);
-		else if (f==null){
+			fs.add(readNote(e));
+		
 			NodeList children=e.getChildNodes();
-			for (int i=0;i<children.getLength() && f==null; i++){
+			for (int i=0;i<children.getLength(); i++){
 				if (children.item(i).getNodeType() == Node.ELEMENT_NODE){
 					Element child=(Element)children.item(i);					
-					f=extractFields(child);
+					fs.addAll(extractFields(child));
 				}
 			}
-		}					
-		return f;
+							
+		return fs;
 	}
 	
 	private FullNameField readFullName(Element e){
@@ -155,9 +165,13 @@ public class HCardReader {
 		PhotoField field=factory.photo();
 		String photoUrl=e.getAttribute("src");
 		if (!photoUrl.startsWith("http")){
-			if (baseUrl.startsWith("http://www.google.com"))
-				baseUrl="http://www.google.com";
-			photoUrl=baseUrl+photoUrl;
+			if (photoUrl.startsWith("//"))
+				photoUrl="https:"+photoUrl;
+			else {
+				if (baseUrl.startsWith("http://www.google.com"))
+					baseUrl="http://www.google.com";
+				photoUrl=baseUrl+photoUrl;
+			}
 		}
 			
 		field.setUri(photoUrl);
@@ -179,5 +193,41 @@ public class HCardReader {
 	
 	private VCard4Factory getProfileFactory() {
 		return new DefaultVCard4Factory();
+	}
+	
+	private String elementAsString(Node node){
+		try {
+			Source source = new DOMSource(node);
+			StringWriter stringWriter = new StringWriter();
+			Result result = new StreamResult(stringWriter);
+			TransformerFactory factory = TransformerFactory.newInstance();
+			Transformer transformer = factory.newTransformer();
+			transformer.transform(source, result);
+			return stringWriter.getBuffer().toString();
+		}catch (Exception e){
+			return null;
+		}
+	}
+	
+	private void writeToFile(String str, String fileName){
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+			out.write(str);
+			out.close();
+			} 
+			catch (IOException e) 
+			{ 
+			System.out.println("Exception ");
+
+			}
+	}
+	
+	private void writeToFile(NodeList list){
+		String fin="";
+		for (int i=0; i<list.getLength(); i++){
+			String element=i+" "+ list.item(i).getNodeName()+ ((Element)list.item(i)).getAttribute("class")+"\n";
+			fin+=element;
+		}
+		writeToFile(fin, "/home/dcheng/children.xml");
 	}
 }

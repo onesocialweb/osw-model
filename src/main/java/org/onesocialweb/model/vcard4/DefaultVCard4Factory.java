@@ -86,5 +86,11 @@ public class DefaultVCard4Factory extends VCard4Factory {
 		
 		return new DefaultSourceField();
 	}
+	
+	@Override
+	public XFeedField feed() {
+		
+		return new DefaultXFeedField();
+	}
 
 }

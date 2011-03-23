@@ -34,9 +34,11 @@ import org.onesocialweb.model.vcard4.TelField;
 import org.onesocialweb.model.vcard4.TimeZoneField;
 import org.onesocialweb.model.vcard4.URLField;
 import org.onesocialweb.model.vcard4.VCard4Factory;
+import org.onesocialweb.model.vcard4.XFeedField;
 import org.onesocialweb.model.vcard4.exception.CardinalityException;
 import org.onesocialweb.model.vcard4.exception.UnsupportedFieldException;
 import org.onesocialweb.xml.namespace.VCard4;
+import org.onesocialweb.xml.namespace.VCard4Extensions;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -94,6 +96,8 @@ public abstract class VCard4DomReader
 						profile.addField(readSource(e));				
 					}else if (name.equals(VCard4.NICKNAME_ELEMENT)) {
 						profile.addField(readNickname(e));				
+					}else if (name.equals(VCard4Extensions.X_FEED_ELEMENT)) {
+						profile.addField(readXFeed(e));				
 					}
 				} catch (CardinalityException ex) {
 					
@@ -319,6 +323,13 @@ public abstract class VCard4DomReader
 		return field;
 	}
 	
+	protected XFeedField readXFeed(Element element) {
+		XFeedField field=factory.feed();
+		field.setFeed(DomHelper.getElementText(element, VCard4.URI_ELEMENT,NS_VCARD4));
+		
+		field.setAclRules(readRules(element));
+		return field;
+	}
 	
 
 	
