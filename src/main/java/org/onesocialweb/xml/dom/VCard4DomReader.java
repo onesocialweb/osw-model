@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.onesocialweb.model.acl.AclRule;
+import org.onesocialweb.model.cache.DefaultDomainCache;
+import org.onesocialweb.model.cache.DomainCache;
 import org.onesocialweb.model.vcard4.BirthdayField;
 import org.onesocialweb.model.vcard4.EmailField;
 import org.onesocialweb.model.vcard4.FullNameField;
@@ -109,6 +111,7 @@ public abstract class VCard4DomReader
 
 		return profile;
 	}
+	
 	
 	protected BirthdayField readBirthday(Element element) {
 		BirthdayField field=factory.birthday();
