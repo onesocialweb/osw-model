@@ -72,8 +72,9 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 			if (eventType == XmlPullParser.START_TAG) {
 				if (namespace.equals(Activitystreams.NAMESPACE)) {
 					if (name.equals(Activitystreams.ACTOR_ELEMENT)) {
-						entry.setActor(parseActor(parser));
-					} else if (name.equals(Activitystreams.VERB_ELEMENT)) {
+						entry.addAuthor(parseActor(parser));
+					} 
+					else if (name.equals(Activitystreams.VERB_ELEMENT)) {
 						entry.addVerb(activityFactory.verb(parser.nextText()));
 					} else if (name.equals(Activitystreams.OBJECT_ELEMENT)) {
 						entry.addObject(parseObject(parser));
@@ -95,13 +96,11 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 			}
 		}
 		
-		if (entry.hasRecipients()){
-			for (AtomReplyTo replyto: entry.getRecipients()){
-				if ((replyto.getRef()!=null) && (replyto.getHref().contains("?;node=urn:"))){
-					entry.setParentId(readParentId(replyto.getHref()));										
-					entry.setParentJID(readParentJID(replyto.getHref()));
-				}					
-			}
+		if (entry.getInReplyTo()!=null){			
+				if ((entry.getInReplyTo().getRef()!=null) && (entry.getInReplyTo().getHref().contains("?;node=urn:"))){
+					entry.setParentId(readParentId(entry.getInReplyTo().getHref()));										
+					entry.setParentJID(readParentJID(entry.getInReplyTo().getHref()));
+				}								
 		}
 		return entry;
 	}
@@ -230,7 +229,7 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 		return link;
 	}
 	
-	protected AtomReplyTo parseRecipient(XmlPullParser parser) throws XmlPullParserException, IOException {	
+	protected AtomReplyTo parseInReplyTo(XmlPullParser parser) throws XmlPullParserException, IOException {	
 		final AtomReplyTo recipient = atomFactory.reply();
 		for (int i=0; i<parser.getAttributeCount(); i++) {
 			String name = parser.getAttributeName(i);
@@ -275,8 +274,13 @@ public abstract class XppActivityReader implements XppReader<ActivityEntry> {
 	protected void readAtomThreadingElement(AtomEntry entry, XmlPullParser parser) throws XmlPullParserException, IOException {
 		String name = parser.getName();
 		
-		if (name.equals(AtomThreading.IN_REPLY_TO_ELEMENT)) {
-			entry.addRecipient(parseRecipient(parser));
+		if (name.equals(AtomThreading.IN_REPLY_TO_ELEMENT)) {		
+			AtomReplyTo replyTo=parseInReplyTo(parser);
+			if (!replyTo.getHref().contains("urn:xmpp:microblog:0;")){
+				entry.addRecipient(atomFactory.recipient(replyTo.getHref()));
+			}
+			else  	
+				entry.setInReplyTo(replyTo);
 		}
 	}
 	

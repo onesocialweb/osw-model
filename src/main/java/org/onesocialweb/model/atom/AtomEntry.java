@@ -31,7 +31,7 @@ public interface AtomEntry {
 
 	public void addLink(AtomLink link);
 	
-	public void addRecipient(AtomReplyTo to);
+	public void addRecipient(AtomTo to);
 	
 	public String getParentId();
 	
@@ -45,7 +45,8 @@ public interface AtomEntry {
 	
 	public List<AtomPerson> getContributors();
 	
-	public List<AtomReplyTo> getRecipients();
+	public List<AtomTo> getRecipients();
+		
 	
 	public String getId();
 	
@@ -63,7 +64,7 @@ public interface AtomEntry {
 	
 	public AtomLink getRepliesLink();
 	
-	public AtomReplyTo getReplyTo();
+	public AtomReplyTo getInReplyTo();
 	
 	public boolean hasAuthors();
 	
@@ -129,6 +130,8 @@ public interface AtomEntry {
 
 	public void setUpdated(Date updated);
 	
-	public void setRecipients(List<AtomReplyTo> resources);
+	public void setRecipients(List<AtomTo> tos);
+	
+	public void setInReplyTo(AtomReplyTo replyTo);
 
 }

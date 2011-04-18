@@ -30,6 +30,8 @@ public abstract class AtomFactory {
 	
 	public abstract AtomPerson person();
 	
+	public abstract AtomTo recipient();
+	
 	public abstract AtomSource source();
 	
 	public AtomCategory category(String term, String label, String scheme) {
@@ -82,6 +84,12 @@ public abstract class AtomFactory {
 		person.setName(name);
 		person.setUri(uri);
 		return person;
+	}
+	
+	public AtomTo recipient(String uri){
+		AtomTo recipient= recipient();
+		recipient.setUri(uri);
+		return recipient;
 	}
 	
 }

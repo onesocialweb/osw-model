@@ -21,12 +21,15 @@ import static org.onesocialweb.xml.dom.DomHelper.setTextContent;
 
 import java.util.Date;
 
+import org.onesocialweb.model.activity.ActivityObject;
 import org.onesocialweb.model.atom.AtomCategory;
 import org.onesocialweb.model.atom.AtomContent;
 import org.onesocialweb.model.atom.AtomEntry;
 import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.AtomPerson;
 import org.onesocialweb.model.atom.AtomReplyTo;
+import org.onesocialweb.model.atom.AtomTo;
+import org.onesocialweb.xml.namespace.Activitystreams;
 import org.onesocialweb.xml.namespace.Atom;
 import org.onesocialweb.xml.namespace.AtomThreading;
 import org.w3c.dom.Document;
@@ -102,24 +105,20 @@ public abstract class AtomDomWriter {
 			}
 		}
 		
-		if (entry.hasRecipients()) {
-			for (AtomReplyTo recipient : entry.getRecipients()) {
+		if (entry.getInReplyTo()!=null) {			
 				Element e = (Element) target.appendChild(target.getOwnerDocument().createElementNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT));
+				write(entry.getInReplyTo(), e);
+			
+		}
+
+		if (entry.hasRecipients()) {
+			for (AtomTo recipient : entry.getRecipients()) {
+				Element e = (Element) target.appendChild(target.getOwnerDocument().createElementNS(Atom.NAMESPACE, Atom.TO_ELEMENT));
 				write(recipient, e);
 			}
 		}
 		
-		if ((entry.getParentId()!=null) && (entry.getParentJID()!=null)){
-			
-			Element e1 = (Element) target.appendChild(target.getOwnerDocument().createElementNS(Atom.NAMESPACE, Atom.LINK_ELEMENT));
-			e1.setAttribute(Atom.REL_ATTRIBUTE, "alternate");
-			e1.setAttribute(Atom.TYPE_ATTRIBUTE, "text/html");
-			e1.setAttribute(Atom.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());
-			
-			Element e2 = (Element) target.appendChild(target.getOwnerDocument().createElementNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT));
-			e2.setAttribute(AtomThreading.REF_ATTRIBUTE, entry.getParentId());
-			e2.setAttribute(AtomThreading.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());			
-		}
+		
 		
 		
 	}
@@ -165,16 +164,21 @@ public abstract class AtomDomWriter {
 		if (person.hasEmail()) appendTextNode(target, Atom.NAMESPACE, Atom.EMAIL_ELEMENT, person.getEmail());
 		if (person.hasName()) appendTextNode(target, Atom.NAMESPACE, Atom.NAME_ELEMENT, person.getName());
 		if (person.hasUri()) appendTextNode(target, Atom.NAMESPACE, Atom.URI_ELEMENT, person.getUri());		
+		appendTextNode(target, Activitystreams.NAMESPACE, Activitystreams.OBJECT_TYPE_ELEMENT, ActivityObject.PERSON);
 	}
 	
 	/* (non-Javadoc)
 	 * @see org.onesocialweb.model.atom.AtomDomWriter#write(org.onesocialweb.model.atom.AtomReplyTo, org.w3c.dom.Element)
 	 */
-	public void write(AtomReplyTo recipient, Element target) {
-		if (recipient.hasRef()) target.setAttribute(AtomThreading.REF_ATTRIBUTE, recipient.getRef());
-		if (recipient.hasHref()) target.setAttribute(AtomThreading.HREF_ATTRIBUTE, recipient.getHref());
-		if (recipient.hasType()) target.setAttribute(AtomThreading.TYPE_ATTRIBUTE, recipient.getType());
-		if (recipient.hasSource()) target.setAttribute(AtomThreading.SOURCE_ATTRIBUTE, recipient.getSource());
+	public void write(AtomReplyTo replyTo, Element target) {
+		if (replyTo.hasRef()) target.setAttribute(AtomThreading.REF_ATTRIBUTE, replyTo.getRef());
+		if (replyTo.hasHref()) target.setAttribute(AtomThreading.HREF_ATTRIBUTE, replyTo.getHref());
+		if (replyTo.hasType()) target.setAttribute(AtomThreading.TYPE_ATTRIBUTE, replyTo.getType());
+		if (replyTo.hasSource()) target.setAttribute(AtomThreading.SOURCE_ATTRIBUTE, replyTo.getSource());
+	}
+	
+	public void write(AtomTo recipient, Element target) {
+		setTextContent(target, "acct:"+recipient.getUri());
 	}
 	
 	protected abstract String format(Date date);

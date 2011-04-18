@@ -20,11 +20,13 @@ import org.onesocialweb.model.atom.AtomEntry;
 
 public interface ActivityObject extends AtomEntry {
 
-	public static String STATUS_UPDATE = "http://onesocialweb.org/spec/1.0/object/status";
-	public static String COMMENT= "http://onesocialweb.org/spec/1.0/object/comment";
-	public static String PICTURE = "http://onesocialweb.org/spec/1.0/object/picture";
-	public static String VIDEO = "http://onesocialweb.org/spec/1.0/object/video";
+	public static String STATUS_UPDATE = "http://activitystrea.ms/schema/1.0/status";
+	public static String NOTE = "http://activitystrea.ms/schema/1.0/note";
+	public static String COMMENT= "http://activitystrea.ms/schema/1.0/comment";
+	public static String PICTURE = "http://activitystrea.ms/schema/1.0/photo";
+	public static String VIDEO = "http://activitystrea.ms/schema/1.0/video";
 	public static String LINK = "http://onesocialweb.org/spec/1.0/object/link";
+	public static String PERSON = "http://activitystrea.ms/schema/1.0/person";
 	
 	public String getType();
 

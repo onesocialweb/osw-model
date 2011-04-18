@@ -16,15 +16,20 @@
  */
 package org.onesocialweb.xml.dom;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.onesocialweb.model.activity.ActivityActor;
 import org.onesocialweb.model.activity.ActivityEntry;
 import org.onesocialweb.model.activity.ActivityFactory;
 import org.onesocialweb.model.activity.ActivityObject;
 import org.onesocialweb.model.activity.ActivityVerb;
+import org.onesocialweb.model.atom.AtomFactory;
 import org.onesocialweb.model.atom.AtomLink;
+import org.onesocialweb.model.atom.AtomPerson;
 import org.onesocialweb.model.atom.AtomReplyTo;
+import org.onesocialweb.model.atom.AtomTo;
 import org.onesocialweb.xml.namespace.Activitystreams;
 import org.onesocialweb.xml.namespace.Atom;
 import org.onesocialweb.xml.namespace.AtomThreading;
@@ -35,6 +40,8 @@ import org.w3c.dom.NodeList;
 public abstract class ActivityDomReader {
 
 	private final ActivityFactory factory;
+	
+	private final AtomFactory atomFactory;
 
 	private final AclDomReader aclDomReader;
 
@@ -42,6 +49,7 @@ public abstract class ActivityDomReader {
 
 	public ActivityDomReader() {
 		this.factory = getActivityFactory();
+		this.atomFactory = getAtomFactory();
 		this.aclDomReader = getAclDomReader();
 		this.atomDomReader = getAtomDomReader();
 	}
@@ -61,11 +69,15 @@ public abstract class ActivityDomReader {
 		entry.setTitle(DomHelper.getElementText(element, "title", Atom.NAMESPACE));
 		entry.setPublished(parseDate(DomHelper.getElementText(element, "published", Atom.NAMESPACE)));
 		entry.setUpdated(parseDate(DomHelper.getElementText(element, "updated", Atom.NAMESPACE)));
-
-		// Get the actor (ignore if more than one)
-		Element actor = DomHelper.getElement(element, "actor", Activitystreams.NAMESPACE);
-		if (actor != null) {
-			entry.setActor(readActor(actor));
+			
+		Element author = DomHelper.getElement(element, "author", Atom.NAMESPACE);
+		// Get the actor (ignore if more than one) -- This is for legcy purposes only, Atom author should be used
+		if (author==null)	
+			author=DomHelper.getElement(element, "actor", Activitystreams.NAMESPACE);
+		if (author != null) {
+			List<AtomPerson> authors= new ArrayList<AtomPerson>();
+			authors.add(readActor(author));
+			entry.setAuthors(authors);
 		}
 
 		// Get the verbs
@@ -86,16 +98,32 @@ public abstract class ActivityDomReader {
 			entry.addAclRule(aclDomReader.readRule((Element) rules.item(i)));
 		}
 
-		// Get the reply-to
-		NodeList replies = element.getElementsByTagNameNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT);
-		for(int i=0; i < replies.getLength(); i++) {
-			AtomReplyTo replyTo= atomDomReader.readReplyTo((Element) replies.item(i));
-			if (replyTo.getHref()!=null){
-				entry.setParentId(readParentId(replyTo.getHref()));
-				entry.setParentJID(readParentJID(replyTo.getHref()));
-			}
-			entry.addRecipient(replyTo);
+		//Get the Atom audience recipients
+		NodeList recipients = element.getElementsByTagNameNS(Atom.NAMESPACE, Atom.TO_ELEMENT);
+		for(int i=0; i < recipients.getLength(); i++) {
+			AtomTo to= atomDomReader.readRecipient((Element) recipients.item(i));
+			if (to!=null)
+			entry.addRecipient(to);
 		}
+		
+
+		
+		// Get the reply-to
+		NodeList replyToList = element.getElementsByTagNameNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT);
+		for(int i=0; i < replyToList.getLength(); i++) {		
+		
+			AtomReplyTo replyTo= atomDomReader.readReplyTo((Element) replyToList.item(i));
+			if (replyTo.getHref()!=null)
+				if  (replyTo.getHref().contains("node=urn:xmpp:microblog:0")){
+					entry.setParentId(atomDomReader.readParentId(replyTo.getHref()));
+					entry.setParentJID(atomDomReader.readParentJID(replyTo.getHref()));
+					entry.setInReplyTo(replyTo);
+				} else {
+					entry.addRecipient(atomFactory.recipient(replyTo.getHref()));
+				}
+			}	
+				
+		
 
 		//Get the links...
 		NodeList links = element.getElementsByTagNameNS(Atom.NAMESPACE, Atom.LINK_ELEMENT);
@@ -103,34 +131,12 @@ public abstract class ActivityDomReader {
 			AtomLink link= atomDomReader.readLink(((Element) links.item(i)));
 			entry.addLink(link);
 		}
+			
 
 
 		return entry;
 	}
 
-	public String readParentJID(String href)
-	{
-		if (href.length()==0)
-			return null;
-		int i=href.indexOf("?");
-		if(i == -1) {
-			return null;
-		}
-		return href.substring(5, i);
-
-	}
-
-	public String readParentId(String href)
-	{
-		if (href.length()==0)
-			return null;
-		int i=href.indexOf("item=");
-		if(i == -1) {
-			return null;
-		}
-		return href.substring(5+i, href.length());
-
-	}
 
 	public String readActivityId(Element element) {
 		return DomHelper.getElementAttribute(element, "id");
@@ -139,7 +145,7 @@ public abstract class ActivityDomReader {
 	
 	public String readIdFromNode(Element element){
 		String node= DomHelper.getElementAttribute(element, "node");
-		return readParentId(node);
+		return atomDomReader.readParentId(node);
 	}
 
 	protected ActivityActor readActor(Element element) {
@@ -181,6 +187,8 @@ public abstract class ActivityDomReader {
 	}
 
 	protected abstract ActivityFactory getActivityFactory();
+	
+	protected abstract AtomFactory getAtomFactory();
 
 	protected abstract AclDomReader getAclDomReader();
 

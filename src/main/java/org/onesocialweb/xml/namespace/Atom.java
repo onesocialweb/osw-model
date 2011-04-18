@@ -70,4 +70,6 @@ public class Atom {
 	
 	public static final String FEED_ELEMENT="feed";
 	
+	public static final String TO_ELEMENT="to";
+	
 }

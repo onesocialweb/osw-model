@@ -28,6 +28,7 @@ import org.onesocialweb.model.atom.AtomFactory;
 import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.AtomPerson;
 import org.onesocialweb.model.atom.AtomReplyTo;
+import org.onesocialweb.model.atom.AtomTo;
 import org.onesocialweb.xml.namespace.Atom;
 import org.onesocialweb.xml.namespace.AtomThreading;
 import org.w3c.dom.Element;
@@ -82,11 +83,29 @@ public abstract class AtomDomReader {
 		for(int i=0; i < links.getLength(); i++) {
 			entry.addLink(readLink((Element) links.item(i)));
 		}
+		
+		//Get the Atom audience recipients
+		NodeList recipients = element.getElementsByTagNameNS(Atom.NAMESPACE, Atom.TO_ELEMENT);
+		for(int i=0; i < recipients.getLength(); i++) {
+			AtomTo to= readRecipient((Element) recipients.item(i));
+			if (to!=null)
+			entry.addRecipient(to);
+		}
 
 		// Get the reply-to
 		NodeList replies = element.getElementsByTagNameNS(AtomThreading.NAMESPACE, AtomThreading.IN_REPLY_TO_ELEMENT);
 		for(int i=0; i < replies.getLength(); i++) {
-			entry.addRecipient(readReplyTo((Element) replies.item(i)));
+			AtomReplyTo replyTo= readReplyTo((Element) replies.item(i));
+			if (replyTo.getHref()!=null)
+				if  (replyTo.getHref().contains("node=urn:xmpp:microblog:0")){
+					entry.setParentId(readParentId(replyTo.getHref()));
+					entry.setParentJID(readParentJID(replyTo.getHref()));
+					entry.setInReplyTo(replyTo);
+				} else {
+					entry.addRecipient(factory.recipient(replyTo.getHref()));
+				}
+			
+			entry.setInReplyTo((readReplyTo((Element) replies.item(i))));
 		}
 
 		return entry;
@@ -115,16 +134,18 @@ public abstract class AtomDomReader {
 		link.setRel(DomHelper.getElementAttribute(element, "rel"));
 		link.setTitle(DomHelper.getElementAttribute(element, "title"));
 		link.setType(DomHelper.getElementAttribute(element, "type"));
-		try {
-			link.setCount(Integer.parseInt(DomHelper.getElementAttribute(element, "thr:count")));
-		} catch(NumberFormatException e) {
-			try{ 
-				link.setCount(Integer.parseInt(DomHelper.getElementAttribute(element, "count")));
+		if (link.getRel().equalsIgnoreCase("replies")) {
+			try {
+				link.setCount(Integer.parseInt(DomHelper.getElementAttribute(element, "thr:count")));
+			} catch(NumberFormatException e) {
+				try{ 
+					link.setCount(Integer.parseInt(DomHelper.getElementAttribute(element, "count")));
+				}
+				catch(NumberFormatException ne) {
+					link.setCount(0);
+				}
 			}
-			catch(NumberFormatException ne) {
-				link.setCount(0);
-			}
-			} 
+		}
 					
 		return link;
 	}
@@ -160,6 +181,43 @@ public abstract class AtomDomReader {
 		return reply;
 	}
 
+	public AtomTo readRecipient(Element element) {
+		AtomTo atomTo=factory.recipient();
+		String to=element.getTextContent();
+		
+		if ((to!=null) && (to.startsWith("acct:"))) {
+			to=to.substring(5);
+			atomTo.setUri(to);
+		}
+		return atomTo;
+	}
+	
+	public String readParentJID(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("?");
+		if(i == -1) {
+			return null;
+		}
+		return href.substring(5, i);
+
+	}
+
+	public String readParentId(String href)
+	{
+		if (href.length()==0)
+			return null;
+		int i=href.indexOf("item=");
+		if(i == -1) {
+			return null;
+		}
+		return href.substring(5+i, href.length());
+
+	}
+
+
+	
 	protected abstract AtomFactory getAtomFactory();
 
 	protected abstract Date parseDate(String atomDate);

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.onesocialweb.model.acl.AclRule;
-import org.onesocialweb.model.atom.AtomReplyTo;
+import org.onesocialweb.model.atom.AtomTo;
 import org.onesocialweb.model.atom.DefaultAtomEntry;
 
 public class DefaultActivityEntry extends DefaultAtomEntry implements ActivityEntry {
@@ -121,8 +121,8 @@ public class DefaultActivityEntry extends DefaultAtomEntry implements ActivityEn
 		for (AclRule rule : rules) {
 			buffer.append(rule.toString());
 		}
-		for (AtomReplyTo atomRecipient : getRecipients()) {
-			buffer.append(atomRecipient.toString());
+		for (AtomTo atomRecipient : getRecipients()) {
+			buffer.append(atomRecipient);
 		}
 		buffer.append("]");
 		return buffer.toString();

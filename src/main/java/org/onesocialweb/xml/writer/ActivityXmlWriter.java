@@ -27,7 +27,7 @@ import org.onesocialweb.model.atom.AtomContent;
 import org.onesocialweb.model.atom.AtomEntry;
 import org.onesocialweb.model.atom.AtomLink;
 import org.onesocialweb.model.atom.AtomPerson;
-import org.onesocialweb.model.atom.AtomReplyTo;
+import org.onesocialweb.model.atom.AtomTo;
 import org.onesocialweb.model.atom.DefaultAtomHelper;
 import org.onesocialweb.xml.namespace.Activitystreams;
 import org.onesocialweb.xml.namespace.Atom;
@@ -154,23 +154,29 @@ public class ActivityXmlWriter extends XmlWriter {
 				endClosed();
 			}
 		}
-		if (entry.hasRecipients()) {
-			for (AtomReplyTo recipient : entry.getRecipients()) {
-				startTag("thr:" + AtomThreading.IN_REPLY_TO_ELEMENT);
-				if (recipient.hasRef()) attribute(AtomThreading.REF_ATTRIBUTE, recipient.getRef());
-				if (recipient.hasHref()) attribute(AtomThreading.HREF_ATTRIBUTE, recipient.getHref());
-				if (recipient.hasSource()) attribute(AtomThreading.SOURCE_ATTRIBUTE, recipient.getSource());
-				if (recipient.hasType()) attribute(AtomThreading.TYPE_ATTRIBUTE, recipient.getType());
-				endClosed();
-			}
+		
+		if (entry.getInReplyTo()!=null) {
+			startTag("thr:" + AtomThreading.IN_REPLY_TO_ELEMENT);
+			if (entry.getInReplyTo().hasRef()) attribute(AtomThreading.REF_ATTRIBUTE, entry.getInReplyTo().getRef());
+			if (entry.getInReplyTo().hasHref()) attribute(AtomThreading.HREF_ATTRIBUTE, entry.getInReplyTo().getHref());
+			if (entry.getInReplyTo().hasSource()) attribute(AtomThreading.SOURCE_ATTRIBUTE, entry.getInReplyTo().getSource());
+			if (entry.getInReplyTo().hasType()) attribute(AtomThreading.TYPE_ATTRIBUTE, entry.getInReplyTo().getType());
+			endClosed();			
+		}
+		
+		for (AtomTo recipient: entry.getRecipients()){
+			text(Atom.TO_ELEMENT, recipient.getUri());
+		
 		}
 		
 		if ((entry.getParentId()!=null) && (entry.getParentJID()!=null)){
-			startTag(Atom.LINK_ELEMENT);			
-			attribute(Atom.REL_ATTRIBUTE, "alternate");
-			attribute(Atom.TYPE_ATTRIBUTE, "text/html");		
-			attribute(Atom.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0;item="+entry.getParentId());
-			endClosed();
+			if (entry.getId()!=null) {
+				startTag(Atom.LINK_ELEMENT);			
+				attribute(Atom.REL_ATTRIBUTE, "alternate");
+				attribute(Atom.TYPE_ATTRIBUTE, "application/atom+xml");		
+				attribute(Atom.HREF_ATTRIBUTE, "xmpp:"+entry.getParentJID()+"?;node=urn:xmpp:microblog:0:replies:item="+entry.getId());
+				endClosed();
+			}
 			
 			startTag("thr:" + AtomThreading.IN_REPLY_TO_ELEMENT);
 			attribute(AtomThreading.REF_ATTRIBUTE, entry.getParentId());

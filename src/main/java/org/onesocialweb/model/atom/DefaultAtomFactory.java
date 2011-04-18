@@ -52,5 +52,10 @@ public class DefaultAtomFactory extends AtomFactory {
 	public AtomReplyTo reply() {
 		return new DefaultAtomReplyTo();
 	}
+	
+	@Override 
+	public AtomTo recipient(){
+		return new DefaultAtomTo();
+	}
 
 }

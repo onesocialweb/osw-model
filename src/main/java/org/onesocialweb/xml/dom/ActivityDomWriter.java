@@ -24,6 +24,7 @@ import org.onesocialweb.model.activity.ActivityActor;
 import org.onesocialweb.model.activity.ActivityEntry;
 import org.onesocialweb.model.activity.ActivityObject;
 import org.onesocialweb.model.activity.ActivityVerb;
+import org.onesocialweb.model.atom.AtomPerson;
 import org.onesocialweb.xml.namespace.Activitystreams;
 import org.onesocialweb.xml.namespace.Atom;
 import org.onesocialweb.xml.namespace.Onesocialweb;
@@ -72,11 +73,12 @@ public abstract class ActivityDomWriter {
 				aclDomWriter.write(rule, element);
 			}
 		}
-		if (entry.hasActor()) {
+		if ((entry.hasActor()) && (!entry.hasAuthors())){
 			Element element = (Element) target.appendChild(target.getOwnerDocument().createElementNS(Activitystreams.NAMESPACE, Activitystreams.ACTOR_ELEMENT));
-			write(entry.getActor(), element);
-
+	    //  if no author was found but only an actor we write it as atom:author anyways
+			atomDomWriter.write((AtomPerson)entry.getActor(),element);
 		}
+		
 		if (entry.hasObjects()) {
 			for (ActivityObject object : entry.getObjects()) {
 				Element element = (Element) target.appendChild(target.getOwnerDocument().createElementNS(Activitystreams.NAMESPACE, Activitystreams.OBJECT_ELEMENT));

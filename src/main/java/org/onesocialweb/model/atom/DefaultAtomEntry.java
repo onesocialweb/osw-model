@@ -30,7 +30,7 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 
 	private List<AtomPerson> contributors = new ArrayList<AtomPerson>();
 	
-	private List<AtomReplyTo> recipients = new ArrayList<AtomReplyTo>();
+	private List<AtomTo> recipients = new ArrayList<AtomTo>();
 
 	private String id;
 	
@@ -38,6 +38,7 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	
 	private String parentJID=null;
 	
+	private AtomReplyTo replyTo=null;
 
 	private List<AtomLink> links = new ArrayList<AtomLink>();
 
@@ -78,7 +79,7 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	}
 	
 	@Override
-	public void addRecipient(AtomReplyTo to) {
+	public void addRecipient(AtomTo to) {
 		this.recipients.add(to);
 	}
 	
@@ -125,7 +126,7 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	}
 	
 	@Override
-	public List<AtomReplyTo> getRecipients() {
+	public List<AtomTo> getRecipients() {
 		return recipients;
 	}
 	
@@ -139,12 +140,8 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	}
 	
 	@Override
-	public AtomReplyTo getReplyTo(){
-		for (AtomReplyTo reply: recipients){
-			if (reply.getRef()!=null && (reply.getRef().length()>0))
-				return reply;
-		}
-		return null;
+	public AtomReplyTo getInReplyTo(){
+		return replyTo;
 	}
 
 	@Override
@@ -341,8 +338,13 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 	}
 	
 	@Override
-	public void setRecipients(final List<AtomReplyTo> recipients) {
+	public void setRecipients(final List<AtomTo> recipients) {
 		this.recipients = recipients;
+	}
+	
+	@Override
+	public void setInReplyTo(final AtomReplyTo replyTo){
+		this.replyTo=replyTo;
 	}
 
 	@Override
@@ -376,7 +378,7 @@ public class DefaultAtomEntry extends DefaultAtomCommon implements AtomEntry {
 		for (AtomContent atomContent : contents) {
 			buffer.append(atomContent.toString());
 		}
-		for (AtomReplyTo atomRecipient : recipients) {
+		for (AtomTo atomRecipient : recipients) {
 			buffer.append(atomRecipient.toString());
 		}
 		buffer.append("]");
