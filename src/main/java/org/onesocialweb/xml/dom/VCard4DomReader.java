@@ -362,14 +362,15 @@ public abstract class VCard4DomReader
 	
 	private boolean validDateOrTime(String type,String dateOrTime)
 	{
-	/*	if ((type.equals("date")) && (dateOrTime.matches("\\d{8}|\\d{4}-\\d\\d|--\\d\\d(\\d\\d)?|---\\d\\d")))
+	
 		return true;
+/*
 		else if ((type.equals("time")) && (dateOrTime.matches("(\\d\\d(\\d\\d(\\d\\d)?)?|-\\d\\d(\\d\\d?)|--\\d\\d)(Z|[+\\-]\\d\\d(\\d\\d)?)?")))
 			return true;
 		else if  ((type.equals("date-time") && (dateOrTime.matches("(\\d{8}|--\\d{4}|---\\d\\d)T\\d\\d(\\d\\d(\\d\\d)?)?(Z|[+\\-]\\d\\d(\\d\\d)?)?"))))
 			return true;
 		else 
-			return false;*/
+			return false;
 		
 		//The above code validates a date or date-time according to the Vcard4 schema.
 		// The code below validates it according to Atom...
@@ -378,6 +379,7 @@ public abstract class VCard4DomReader
 		if (dateOrTime.matches("(\\d{4})(?:-(\\d{2}))?(?:-(\\d{2}))?(?:([Tt])?(?:(\\d{2}))?(?::(\\d{2}))?(?::(\\d{2}))?(?:\\.(\\d{3}))?)?([Zz])?(?:([+-])(\\d{2}):(\\d{2}))?"))
 			return true;
 		return false;
+		*/
 	}
 	
 	protected abstract VCard4Factory getProfileFactory();
